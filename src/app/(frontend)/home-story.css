@@ -1,0 +1,15 @@
+.atelier-home .ritual-journey { background:var(--paper); color:var(--ink); padding-block:100px; grid-template-columns:.9fr 1.1fr; }
+.atelier-home .ritual-journey__visual { order:2; margin-right:4%; }
+.atelier-home .ritual-journey__copy { order:1; }
+.atelier-home .ritual-journey__copy h2 em { color:var(--teal); }
+.atelier-home .ritual-journey__copy > p,.atelier-home .ritual-steps p,.atelier-home .ritual-steps li > span { color:var(--muted); }
+.atelier-home .ritual-journey .button { border-color:var(--ink); color:var(--ink); }
+.atelier-home .ritual-journey .button:hover { background:var(--ink); color:var(--paper); }
+.atelier-home .atelier-journal { border-top:1px solid var(--line); padding-block:70px 90px; }
+.atelier-home .atelier-questions { padding-block:45px 80px; }
+@media(max-width:760px) {
+ .atelier-home .ritual-journey { grid-template-columns:1fr; padding-block:52px 66px; gap:40px; }
+ .atelier-home .ritual-journey__visual { min-height:320px; margin-right:30px; }
+ .atelier-home .atelier-journal { padding-block:45px; }
+ .atelier-home .atelier-questions { padding-block:25px 45px; }
+}

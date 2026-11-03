@@ -1,0 +1,49 @@
+.identity-hero { position:relative; background:var(--paper); isolation:isolate; }
+.identity-hero__stage { position:relative; height:clamp(480px,37vw,650px); max-width:1920px; margin:auto; }
+.identity-hero__contours { position:absolute; inset:0; width:100%; height:100%; opacity:.85; }
+.identity-hero h1 { position:absolute; z-index:2; left:var(--gutter); top:12%; width:7.9em; max-width:57%; font:500 clamp(72px,7.35vw,126px)/1.06 var(--serif); letter-spacing:-.035em; text-wrap:balance; }
+.identity-hero h1 em { color:var(--teal); font-weight:400; }
+.identity-hero__portrait { position:absolute; right:var(--gutter); top:6%; width:43%; height:103%; overflow:hidden; background:var(--soft); }
+.identity-hero__portrait img { width:100%; height:100%; object-fit:cover; object-position:73% 42%; }
+.identity-hero__detail-wrap { position:absolute; z-index:3; width:16%; left:40%; top:64%; }
+.identity-hero__detail { padding:9px 9px 12px; background:var(--paper-light); transform:rotate(-6deg); box-shadow:0 16px 36px #173d3926; }
+.identity-hero__detail img { width:100%; height:auto; aspect-ratio:1.45; object-fit:cover; }
+.identity-hero__detail figcaption { margin-top:8px; text-align:center; font:italic 16px/1.35 var(--serif); }
+.identity-hero__signature { position:absolute; left:var(--gutter); bottom:12%; font:500 20px/1 var(--sans); letter-spacing:.13em; }
+.identity-hero__action { display:grid; grid-template-columns:minmax(280px,1fr) auto; align-items:center; column-gap:8%; row-gap:18px; padding:76px var(--gutter) 32px; background:var(--teal); color:var(--paper); }
+.identity-hero__action p { max-width:45ch; font-size:19px; line-height:1.65; }
+.identity-hero__action strong { font-weight:600; }
+.identity-hero__cta { background:var(--paper); color:var(--ink); min-width:260px; justify-content:space-between; }
+.identity-hero__cta:hover { background:var(--champagne); }
+.identity-hero__about { grid-column:1; display:inline-flex; align-items:center; gap:14px; width:fit-content; min-height:44px; font-size:16px; text-decoration:underline; text-underline-offset:6px; }
+.identity-hero__about svg { width:20px; }
+.identity-hero a:focus-visible { outline:2px solid currentColor; outline-offset:5px; }
+@media(min-width:1700px) { .identity-hero__action { padding-inline:max(var(--gutter),calc((100vw - 1744px)/2)); } }
+@media(max-width:1000px) {
+  .identity-hero__stage { height:460px; }
+  .identity-hero h1 { font-size:clamp(58px,8vw,80px); top:16%; max-width:59%; }
+  .identity-hero__portrait { width:45%; }
+  .identity-hero__detail-wrap { width:20%; left:36%; }
+  .identity-hero__action { gap:18px 5%; padding-top:58px; }
+  .identity-hero__action p { font-size:18px; }
+  .identity-hero__cta { min-width:230px; }
+}
+@media(max-width:600px) {
+  .identity-hero__stage { height:auto; padding:22px var(--gutter) 0; display:grid; }
+  .identity-hero h1 { position:relative; inset:auto; max-width:100%; width:auto; margin:0 0 22px; font-size:clamp(43px,11vw,65px); line-height:1.1; }
+  .identity-hero__contours { height:70%; }
+  .identity-hero__portrait { position:relative; inset:auto; width:100%; height:clamp(220px,61vw,340px); margin-bottom:-18px; }
+  .identity-hero__portrait img { object-position:70% 38%; }
+  .identity-hero__detail-wrap { width:29%; left:auto; right:12px; top:auto; bottom:-12px; }
+  .identity-hero__detail { padding:5px; }
+  .identity-hero__detail img { aspect-ratio:1.1; }
+  .identity-hero__detail figcaption { display:none; }
+  .identity-hero__signature { display:none; }
+  .identity-hero__action { display:flex; align-items:stretch; flex-direction:column; gap:16px; padding:48px var(--gutter) 22px; }
+  .identity-hero__action p { font-size:16px; line-height:1.6; max-width:42ch; }
+  .identity-hero__cta { min-height:54px; min-width:0; font-size:16px; padding:14px 18px; }
+  .identity-hero__about { display:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .identity-hero__portrait,.identity-hero__portrait img,.identity-hero__detail-wrap,.identity-hero h1 { transform:none!important; clip-path:none!important; opacity:1!important; }
+}
