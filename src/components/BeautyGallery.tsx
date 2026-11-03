@@ -7,8 +7,8 @@ import './beauty-gallery.css'
 
 const scenes = [
   {
-    key: 'skin', label: 'Làn da', title: 'Một làn da được quan tâm.',
-    description: 'Bắt đầu nhẹ nhàng, từ điều làn da đang cần.',
+    key: 'skin', label: 'Làn da', title: 'Hiểu làn da trước khi lựa chọn.',
+    description: 'Tìm hiểu tình trạng da, mục tiêu cải thiện và phương pháp phù hợp trước khi lựa chọn dịch vụ.',
     image: '/images/campaign-gallery-skin-main.webp',
     alt: 'Chân dung người trưởng thành với làn da tự nhiên, ảnh minh họa',
     detail: '/images/campaign-gallery-skin-detail.webp',
@@ -16,8 +16,8 @@ const scenes = [
     href: '/dich-vu', link: 'Khám phá các dịch vụ',
   },
   {
-    key: 'brows', label: 'Dáng nét', title: 'Giữ lại điều làm nên bạn.',
-    description: 'Tìm hiểu dáng mày và sắc môi theo nét riêng của gương mặt.',
+    key: 'brows', label: 'Dáng nét', title: 'Đường nét hài hòa với gương mặt.',
+    description: 'Cân nhắc dáng mày và sắc môi trong tổng thể gương mặt, theo sở thích và kết quả bạn mong muốn.',
     image: '/images/campaign-gallery-brows-main.webp',
     alt: 'Chi tiết gương mặt người trưởng thành minh họa dáng mày và sắc môi',
     detail: '/images/campaign-gallery-brows-detail.webp',
@@ -25,8 +25,8 @@ const scenes = [
     href: '/dich-vu', link: 'Tìm dịch vụ bạn quan tâm',
   },
   {
-    key: 'ritual', label: 'Khoảng thư giãn', title: 'Dành một khoảng cho mình.',
-    description: 'Chậm lại một chút, để việc chăm sóc trở thành thời gian của riêng bạn.',
+    key: 'ritual', label: 'Trước khi lựa chọn', title: 'Hiểu rõ phương pháp và chi phí.',
+    description: 'Làm rõ các bước thực hiện, thời gian hồi phục và cách chăm sóc sau dịch vụ trong buổi tư vấn.',
     image: '/images/campaign-gallery-ritual-main.webp',
     alt: 'Người phụ nữ thư giãn cùng khăn mềm trong không gian yên tĩnh',
     detail: '/images/campaign-gallery-ritual-detail.webp',

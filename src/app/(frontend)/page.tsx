@@ -28,7 +28,7 @@ export default async function HomePage() {
       <div className="atelier-space__title"><h2 id="space-title">Một khoảng <em>bình yên.</em></h2><Link href="/gioi-thieu" className="text-link">Về AZ FACE <ArrowIcon /></Link></div>
     </section>
     <section className="atelier-journal page-width"><div className="atelier-section-title"><h2>Đọc để <em>hiểu thêm.</em></h2><Link href="/kien-thuc" className="text-link">Khám phá kiến thức <ArrowIcon /></Link></div><div className="atelier-journal__grid">{posts.slice(0, 3).map(post => <ArticleCard key={post.slug} post={post} />)}</div></section>
-    <section className="atelier-questions page-width"><div className="atelier-questions__art"><h2>Điều bạn <em>muốn biết.</em></h2></div><div className="atelier-questions__answers"><FAQ items={homeFAQs.slice(0, 3)} /><Link href="/lien-he" className="text-link">Còn điều muốn hỏi? <ArrowIcon /></Link></div></section>
+    <section className="atelier-questions page-width"><div className="atelier-questions__art"><h2>Câu hỏi <em>thường gặp.</em></h2></div><div className="atelier-questions__answers"><FAQ items={homeFAQs.slice(0, 3)} /><Link href="/lien-he" className="button button-dark">Trao đổi câu hỏi của bạn <ArrowIcon /></Link></div></section>
     <Consultation />
   </div>
 }

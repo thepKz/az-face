@@ -46,7 +46,7 @@ export function ServicesPresentation({ services }: { services: Service[] }) {
 
   return <div className="az-services" id="az-services-route">
     <RouteMotion targetId="az-services-route" />
-    <header className="az-services__intro"><h1>Bắt đầu từ điều bạn cần.</h1><p>Chọn một hướng chăm sóc. Dành thời gian tìm hiểu theo nhịp của bạn.</p></header>
+    <header className="az-services__intro"><h1>Dịch vụ thẩm mỹ khuôn mặt.</h1><p>Tìm hiểu từng nhóm dịch vụ, các bước thực hiện và những câu hỏi cần trao đổi trước khi quyết định.</p></header>
     {active ? <section className="az-services__selector" aria-label="Khám phá nhóm dịch vụ">
       <fieldset className="az-services__choices"><legend>Điều bạn đang quan tâm</legend>{services.map(service => <label key={service.slug} className="az-services__choice">
         <input type="radio" name={`${id}-service`} checked={active.slug === service.slug} onChange={() => setSelected(service.slug)} aria-controls={`${id}-selected`} />

@@ -25,10 +25,12 @@ export function Header({ services }: { services: HeaderService[] }) {
   const mobileMenu = useRef<HTMLDetailsElement>(null)
   const servicesMenu = useRef<HTMLDetailsElement>(null)
   const header = useRef<HTMLElement>(null)
+  const hoverClose = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [condensed, setCondensed] = useState(false)
   const [activeHash, setActiveHash] = useState('')
 
   const closeMenus = () => {
+    if (hoverClose.current) clearTimeout(hoverClose.current)
     if (mobileMenu.current) mobileMenu.current.open = false
     if (servicesMenu.current) servicesMenu.current.open = false
   }
@@ -45,6 +47,7 @@ export function Header({ services }: { services: HeaderService[] }) {
     window.addEventListener('hashchange', hash)
     document.addEventListener('pointerdown', outside)
     return () => {
+      if (hoverClose.current) clearTimeout(hoverClose.current)
       window.removeEventListener('scroll', scroll)
       window.removeEventListener('hashchange', hash)
       document.removeEventListener('pointerdown', outside)
@@ -71,16 +74,27 @@ export function Header({ services }: { services: HeaderService[] }) {
       <div className="az-header-inner">
         <Link href="/" className="az-brand" aria-label="AZ FACE - Trang chủ" onClick={closeMenus}>
           <img src="/brand/logo.svg" width="60" height="60" alt="" />
-          <span className="az-brand-name">AZ FACE<span>Chăm chút nét riêng</span></span>
+          <span className="az-brand-name">AZ FACE<span>Thẩm mỹ khuôn mặt</span></span>
         </Link>
         <nav className="az-desktop-nav" aria-label="Điều hướng chính">
           {navLink(navigation[0])}
-          <details className="az-service-disclosure" ref={servicesMenu} onKeyDown={escapeMenu} onBlur={blurMenu}>
+          <details className="az-service-disclosure" ref={servicesMenu} onKeyDown={escapeMenu} onBlur={blurMenu}
+            onPointerEnter={event => {
+              if (event.pointerType !== 'mouse' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+              if (hoverClose.current) clearTimeout(hoverClose.current)
+              if (servicesMenu.current) servicesMenu.current.open = true
+            }}
+            onPointerLeave={event => {
+              if (event.pointerType !== 'mouse') return
+              hoverClose.current = setTimeout(() => {
+                if (servicesMenu.current && !servicesMenu.current.contains(document.activeElement)) servicesMenu.current.open = false
+              }, 180)
+            }}>
             <summary className="az-nav-link" data-current={pathname.startsWith('/dich-vu')}><span>Dịch vụ</span><Chevron /></summary>
             <div className="az-mega-menu">
               <div className="az-mega-intro">
-                <h2>Bắt đầu từ điều bạn cần.</h2>
-                <p>Một khoảng dừng để tìm hiểu và lựa chọn cách chăm sóc của mình.</p>
+                <h2>Thẩm mỹ khuôn mặt.</h2>
+                <p>Tìm hiểu dịch vụ theo vùng bạn quan tâm, mục tiêu cải thiện và những điều cần cân nhắc.</p>
                 <Link href="/dich-vu" className="az-menu-all" onClick={() => follow('/dich-vu')}>Khám phá tất cả dịch vụ<ArrowIcon /></Link>
               </div>
               <div className="az-mega-services">
@@ -99,7 +113,7 @@ export function Header({ services }: { services: HeaderService[] }) {
         <details className="az-mobile-menu" ref={mobileMenu} onKeyDown={escapeMenu} onBlur={blurMenu}>
           <summary className="az-menu-toggle"><span className="az-toggle-label">Menu</span><span className="az-toggle-lines" aria-hidden="true"><span /><span /></span></summary>
           <nav aria-label="Điều hướng trên điện thoại" className="az-mobile-panel">
-            <div className="az-menu-preview" aria-hidden="true"><img src="/images/edition-menu-stilllife.webp" alt="" width="1000" height="1000" /><span>Một chút an yên.</span></div>
+            <div className="az-menu-preview" aria-hidden="true"><img src="/images/edition-menu-stilllife.webp" alt="" width="1000" height="1000" /><span>Tôn nét hài hòa.</span></div>
             <Link href="/" className="az-mobile-home" onClick={closeMenus}>Trang chủ<ArrowIcon /></Link>
             {navLink(navigation[0])}
             <details className="az-mobile-services">

@@ -138,9 +138,9 @@ export const services: Service[] = [
 ];
 
 export const homeFAQs: FAQ[] = [
-  { question: "Chưa biết chọn dịch vụ nào, tôi nên bắt đầu từ đâu?", answer: "Hãy bắt đầu từ điều bạn đang quan tâm: chăm sóc da hằng ngày, tìm hiểu một buổi chăm sóc hoặc lựa chọn dáng mày và sắc môi. Bạn cũng có thể chọn “Tôi muốn tìm hiểu thêm” khi thử form." },
-  { question: "Tôi có cần chọn dịch vụ trước khi trao đổi không?", answer: "Không. Một câu hỏi cụ thể cũng là điểm bắt đầu. Bạn có thể đọc phạm vi từng nhóm rồi ghi lại những điều muốn được giải thích thêm." },
-  { question: "Tôi nên chuẩn bị gì trước khi tìm hiểu dịch vụ?", answer: "Bạn có thể ghi lại điều mình quan tâm, thói quen chăm sóc và những câu hỏi về phạm vi, thời lượng hoặc chi phí. Một vài câu hỏi rõ ràng giúp cuộc trao đổi tập trung hơn." },
+  { question: "Chưa biết chọn dịch vụ nào, tôi nên bắt đầu từ đâu?", answer: "Hãy xác định vùng trên gương mặt bạn muốn cải thiện, điều bạn muốn giữ lại và kết quả mong đợi. Bạn không cần tự chọn phương pháp. Buổi tư vấn là lúc làm rõ lựa chọn phù hợp, giới hạn và những rủi ro cần cân nhắc." },
+  { question: "Tôi có cần chọn dịch vụ trước khi trao đổi không?", answer: "Không. Bạn có thể bắt đầu bằng câu hỏi về làn da hoặc đường nét gương mặt. Hãy tìm hiểu phạm vi thực hiện, chi phí và thời gian hồi phục trước khi quyết định." },
+  { question: "Tôi nên chuẩn bị gì trước buổi tư vấn thẩm mỹ?", answer: "Ghi lại mong muốn, các dịch vụ đã từng thực hiện, tình trạng dị ứng và thuốc đang sử dụng để trao đổi trực tiếp với người phụ trách chuyên môn. Chuẩn bị thêm câu hỏi về phương pháp, rủi ro, chi phí và chăm sóc sau thực hiện." },
   { question: "Tôi có thể chuẩn bị nội dung trao đổi như thế nào?", answer: "Chọn nhóm nhu cầu và ghi lại câu hỏi trong mục Trao đổi nhu cầu. Bạn có thể xem và chỉnh sửa nội dung ngay trên thiết bị của mình." },
   { question: "Tôi có thể xem giá dịch vụ ở đâu?", answer: "Trước khi lựa chọn một dịch vụ, bạn nên làm rõ mức phí, nội dung đã bao gồm và điều kiện áp dụng với cơ sở cung cấp." },
 ];

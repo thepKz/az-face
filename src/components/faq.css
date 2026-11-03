@@ -1,0 +1,25 @@
+.faq-list { width:100%; overflow-anchor:none; }
+.faq-list > .faq-item[data-open] { border:0; border-bottom:1px solid var(--line); }
+.faq-list > .faq-item[data-open]:first-child { border-top:1px solid var(--line); }
+.faq-list .faq-heading { margin:0; font:inherit; }
+.faq-list .faq-trigger { display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; min-height:88px; padding:22px 0; border:0; background:transparent; color:var(--ink); text-align:left; font:500 18px/1.55 var(--sans); cursor:pointer; }
+.faq-list .faq-trigger > span:first-child { max-width:55ch; }
+.faq-list .faq-chevron { display:grid; place-items:center; width:44px; height:44px; flex:0 0 44px; border:1px solid #758f83; border-radius:50%; background:var(--paper-light); color:var(--ink); transition:background .2s ease,color .2s ease,border-color .2s ease; }
+.faq-list .faq-chevron svg { width:22px; height:22px; transition:transform .28s ease; }
+.faq-list .faq-trigger:hover .faq-chevron,.faq-list .faq-item[data-open="true"] .faq-chevron { color:var(--white); background:var(--teal); border-color:var(--teal); }
+.faq-list .faq-trigger:focus-visible { outline:2px solid var(--teal); outline-offset:5px; border-radius:3px; }
+.faq-list .faq-item[data-open="true"] .faq-trigger { color:var(--teal); }
+.faq-list .faq-item[data-open="true"] .faq-chevron svg { transform:rotate(180deg); }
+/* Keeping the panel mounted lets layout interpolate without native details snapping. */
+.faq-list .faq-panel { display:grid; grid-template-rows:0fr; visibility:hidden; transition:grid-template-rows .3s cubic-bezier(.2,.7,.2,1),visibility 0s .3s; }
+.faq-list .faq-item[data-open="true"] .faq-panel { grid-template-rows:1fr; visibility:visible; transition:grid-template-rows .3s cubic-bezier(.2,.7,.2,1),visibility 0s; }
+.faq-list .faq-panel-inner { min-height:0; overflow:hidden; }
+.faq-list .faq-panel .faq-answer { margin:0; padding:0 68px 26px 0; color:var(--muted); font:400 18px/1.7 var(--sans); }
+.faq-list .faq-panel .faq-answer p { margin:0; font:inherit; max-width:62ch; }
+@media(max-width:680px) {
+ .faq-list .faq-trigger { min-height:80px; padding-block:18px; gap:16px; font-size:17px; }
+ .faq-list .faq-panel .faq-answer { padding:0 0 22px; font-size:16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .faq-list .faq-panel,.faq-list .faq-chevron,.faq-list .faq-chevron svg { transition:none; }
+}

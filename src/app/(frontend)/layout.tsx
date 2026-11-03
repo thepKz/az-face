@@ -12,8 +12,8 @@ import { getServices } from '@/lib/cms'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: { default: 'AZ FACE | Chăm chút nét riêng của bạn', template: '%s | AZ FACE' },
-  description: 'Khám phá chăm sóc da, dáng mày và sắc môi cùng AZ FACE. Tìm hiểu từng lựa chọn và chuẩn bị những điều bạn muốn trao đổi.',
+  title: { default: 'AZ FACE | Thẩm mỹ khuôn mặt', template: '%s | AZ FACE' },
+  description: 'Tìm hiểu thẩm mỹ khuôn mặt cùng AZ FACE: làn da, đường nét và những điều cần trao đổi trước khi lựa chọn dịch vụ.',
   robots: { index: false, follow: false },
   icons: { icon: '/brand/logo.png' },
 }

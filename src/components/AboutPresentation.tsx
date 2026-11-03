@@ -10,7 +10,7 @@ export function AboutPresentation() {
     <RouteMotion targetId="az-about-route" />
     <section className="az-about__hero" data-route-hero>
       <img src="/images/journey-about-hero.webp" alt="Không gian hành lang với ánh sáng tự nhiên và vật liệu sáng" width="1600" height="1000" fetchPriority="high" data-route-hero-image />
-      <div className="az-about__hero-copy"><h1>Một khoảng dành riêng cho bạn.</h1><p>Chậm lại, lắng nghe và chăm chút điều làm nên nét riêng.</p><a href="#cau-chuyen-az" className="az-about__explore">Bước vào câu chuyện <ArrowIcon /></a></div>
+      <div className="az-about__hero-copy"><h1>AZ FACE. Thẩm mỹ khuôn mặt.</h1><p>Tập trung vào làn da và đường nét gương mặt, từ điều bạn muốn cải thiện đến nét riêng bạn muốn giữ.</p><a href="#cau-chuyen-az" className="az-about__explore">Bước vào câu chuyện <ArrowIcon /></a></div>
     </section>
     <section className="az-about__opening" id="cau-chuyen-az">
       <h2 data-route-copy>Vẻ đẹp bắt đầu từ sự thấu hiểu.</h2>
