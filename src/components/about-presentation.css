@@ -21,15 +21,25 @@
 .az-about__mosaic-copy em { font-weight:400; }
 .az-about__mosaic-copy p { margin-top:22px; max-width:36ch; }
 .az-about__mosaic-detail { grid-column:8/13; aspect-ratio:1.35; }
-.az-about__philosophy { display:grid; grid-template-columns:1.15fr .85fr; gap:8%; align-items:center; background:#dfe7dc; padding:70px var(--gutter); }
-.az-about__philosophy-art { overflow:hidden; aspect-ratio:4/4.6; }
-.az-about__philosophy-art img { width:100%; height:100%; object-fit:cover; }
+.az-about__philosophy { display:grid; grid-template-columns:1.15fr .85fr; gap:8%; align-items:start; background:#dfe7dc; padding:70px var(--gutter); }
+.az-about__philosophy-art { position:sticky; top:130px; overflow:hidden; aspect-ratio:4/4.6; max-height:calc(100svh - 170px); }
+.az-about__philosophy-art img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .5s cubic-bezier(.16,1,.3,1); }
+.az-about__philosophy-art img.is-current { opacity:1; }
+.az-about__art-caption { position:absolute; left:24px; bottom:24px; max-width:calc(100% - 48px); padding:12px 18px; background:var(--paper); color:var(--ink); font:500 16px/1.4 var(--sans); }
 .az-about__principles h2 { max-width:20ch; margin-bottom:38px; }
-.az-about__principles > div { margin-top:28px; }
+.az-about__principles > div { position:relative; margin-top:28px; padding-top:26px; min-height:28svh; }
+.az-about__reading-line { position:absolute; top:0; left:0; right:0; height:1px; background:currentColor; transform-origin:left; }
 .az-about__principles h3 { font:500 25px/1.35 var(--serif); }
 .az-about__principles p { margin-top:10px; max-width:36ch; }
 .az-about__legal { padding:0 var(--gutter) 48px; font-size:13px!important; }
 .az-about a:focus-visible { outline:2px solid currentColor; outline-offset:6px; }
+@media(max-width:900px) {
+ .az-about__philosophy-art { position:relative; top:auto; max-height:none; }
+ .az-about__philosophy-art img { transition:none; }
+ .az-about__philosophy-art img:first-child { opacity:1; }
+ .az-about__philosophy-art img:not(:first-child),.az-about__art-caption { display:none; }
+ .az-about__principles > div { min-height:0; padding-bottom:12px; }
+}
 @media(max-width:760px) {
  .az-about h2 { font-size:30px; }
  .az-about__hero { min-height:560px; max-height:760px; height:85svh; }
@@ -47,4 +57,4 @@
  .az-about__principles h3 { font-size:24px; }
  .az-about__principles p { max-width:none; }
 }
-@media(prefers-reduced-motion:reduce) { .az-about [data-route-frame] { clip-path:none!important; }.az-about [data-route-drift] img,.az-about [data-route-hero-image],.az-about [data-route-copy] { transform:none!important; opacity:1!important; } }
+@media(prefers-reduced-motion:reduce) { .az-about [data-route-frame] { clip-path:none!important; }.az-about [data-route-drift] img,.az-about [data-route-hero-image],.az-about [data-route-copy] { transform:none!important; opacity:1!important; }.az-about__philosophy-art { position:relative;top:auto; }.az-about__philosophy-art img { transition:none; }.az-about__philosophy-art img:first-child { opacity:1; }.az-about__philosophy-art img:not(:first-child),.az-about__art-caption { display:none; }.az-about__principles > div { min-height:0; }.az-about__reading-line { transform:none!important; } }

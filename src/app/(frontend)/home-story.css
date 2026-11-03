@@ -1,11 +1,18 @@
-.atelier-home .ritual-journey { background:var(--paper); color:var(--ink); padding-block:100px; grid-template-columns:.9fr 1.1fr; }
+.atelier-home { --warm-field:#e9bea5; }
+.atelier-home .ritual-journey { background:var(--warm-field); color:var(--ink); padding-block:100px; grid-template-columns:.9fr 1.1fr; }
 .atelier-home .ritual-journey__visual { order:2; margin-right:4%; }
+.atelier-home .ritual-journey__visual > img { border-radius:48% 52% 38% 62% / 36% 42% 58% 64%; }
+.atelier-home .ritual-journey__inset { border-radius:50%; aspect-ratio:1; width:32%; height:auto; bottom:-8px; }
+.atelier-home .ritual-journey__inset img { width:100%; height:auto; aspect-ratio:1; object-fit:cover; }
 .atelier-home .ritual-journey__copy { order:1; }
 .atelier-home .ritual-journey__copy h2 em { color:var(--teal); }
 .atelier-home .ritual-journey__copy > p,.atelier-home .ritual-steps p,.atelier-home .ritual-steps li > span { color:var(--muted); }
 .atelier-home .ritual-journey .button { border-color:var(--ink); color:var(--ink); }
 .atelier-home .ritual-journey .button:hover { background:var(--ink); color:var(--paper); }
 .atelier-home .atelier-journal { border-top:1px solid var(--line); padding-block:70px 90px; }
+.atelier-home .atelier-journal__grid .article-image-link { border-radius:45% 55% 40% 60% / 38% 42% 58% 62%; }
+.atelier-home .atelier-journal__grid .article-card:nth-child(2) .article-image-link { border-radius:50%; }
+.atelier-home .atelier-journal__grid .article-card:nth-child(3) .article-image-link { border-radius:56% 44% 53% 47% / 45% 60% 40% 55%; }
 .atelier-home .atelier-questions { padding-block:45px 80px; }
 @media(max-width:760px) {
  .atelier-home .ritual-journey { grid-template-columns:1fr; padding-block:52px 66px; gap:40px; }

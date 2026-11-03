@@ -1,10 +1,16 @@
+import { pageText } from '@/i18n/page-messages'
+import { getLocale } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { getPublishedPosts } from '@/lib/cms'
 export const dynamic = 'force-dynamic'
 import { EditorialJournal } from '@/components/EditorialJournal'
 
-export const metadata: Metadata = { title: 'Kiến thức để hiểu thêm trước khi lựa chọn' }
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const t = pageText(locale)
+ return { title: t("Kiến thức để hiểu thêm trước khi lựa chọn") } }
 export default async function JournalPage({ searchParams }: { searchParams: Promise<{ trang?: string }> }) {
+
   const posts = await getPublishedPosts()
   const query = await searchParams
   const pageCount = Math.max(1, Math.ceil(posts.length / 6))

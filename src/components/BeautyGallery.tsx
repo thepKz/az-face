@@ -1,7 +1,10 @@
 'use client'
 
+import { pageText } from '@/i18n/page-messages'
+import { useLocale } from 'next-intl'
+
 import { useEffect, useId, useRef, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/i18n/Link'
 import { ArrowIcon } from './Icons'
 import './beauty-gallery.css'
 
@@ -36,6 +39,9 @@ const scenes = [
 ] as const
 
 export function BeautyGallery() {
+  const locale = useLocale()
+  const t = pageText(locale)
+
   const [active, setActive] = useState<(typeof scenes)[number]['key']>('skin')
   const sectionRef = useRef<HTMLElement>(null)
   const previousScene = useRef(active)
@@ -81,14 +87,14 @@ export function BeautyGallery() {
     <section ref={sectionRef} className="beauty-gallery" id="khong-gian-cham-soc" aria-labelledby={`${id}-title`} data-beauty-gallery>
       <div className="beauty-gallery__inner">
         <header className="beauty-gallery__heading">
-          <h2 id={`${id}-title`}>Cảm hứng <em>cho bạn.</em></h2>
+          <h2 id={`${id}-title`}>{t("Cảm hứng")} <em>{t("cho bạn.")}</em></h2>
           <fieldset className="beauty-gallery__choices">
-            <legend>Chọn một góc nhìn</legend>
+            <legend>{t("Chọn một góc nhìn")}</legend>
             {scenes.map(scene => (
               <label key={scene.key} className="beauty-gallery__choice">
                 <input type="radio" name={`${id}-scene`} value={scene.key} checked={active === scene.key}
                   aria-controls={`${id}-${scene.key}`} onChange={() => setActive(scene.key)} />
-                <span>{scene.label}</span>
+                <span>{t(scene.label)}</span>
               </label>
             ))}
           </fieldset>
@@ -103,16 +109,16 @@ export function BeautyGallery() {
                   <img src="/images/campaign-botanical.webp" alt="" width="1024" height="1280" loading="lazy" />
                 </div>
                 <div className="beauty-gallery__main" data-beauty-layer="main">
-                  <img src={scene.image} alt={scene.alt} width="1024" height="1280" loading="lazy" />
+                  <img src={scene.image} alt={t(scene.alt)} width="1024" height="1280" loading="lazy" />
                 </div>
                 <div className="beauty-gallery__detail" data-beauty-layer="detail">
-                  <img src={scene.detail} alt={scene.detailAlt} width="1024" height="1280" loading="lazy" />
+                  <img src={scene.detail} alt={t(scene.detailAlt)} width="1024" height="1280" loading="lazy" />
                 </div>
               </div>
             </figure>
             <div className="beauty-gallery__story">
-              <div><h3>{scene.title}</h3><p>{scene.description}</p></div>
-              <Link href={scene.href} className="beauty-gallery__link">{scene.link}<ArrowIcon /></Link>
+              <div><h3>{t(scene.title)}</h3><p>{t(scene.description)}</p></div>
+              <Link href={scene.href} className="beauty-gallery__link">{t(scene.link)}<ArrowIcon /></Link>
             </div>
           </div>
         ))}

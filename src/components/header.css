@@ -25,9 +25,9 @@
 .az-mega-service > img { border-radius: 45px 0 30px 0; }
 .az-menu-preview { display: none; }
 .route-arrival { position: fixed; inset: 0; z-index: 59; pointer-events: none; }
-.route-arrival > span { position: absolute; inset: 0; background: #dfe8df; transform-origin: top; animation: route-wipe .7s var(--ease) both; }
-.route-arrival > span + span { background: var(--paper); animation-duration: .55s; }
-@keyframes route-wipe { from { transform: scaleY(.22); border-radius: 0 0 45% 10%; } to { transform: scaleY(0); border-radius: 0 0 0 0; } }
+.route-arrival > span { position: absolute; inset: 0; background: #dfe8df; transform-origin: top; animation: route-wipe .58s cubic-bezier(.76,0,.24,1) both; }
+.route-arrival > span + span { background: var(--paper); animation-duration: .46s; }
+@keyframes route-wipe { from { transform: scaleY(1); border-radius: 0 0 0 0; } 60% { border-radius: 0 0 45% 18%; } to { transform: scaleY(0); border-radius: 0 0 60% 25%; } }
 @keyframes menu-open { from { clip-path: inset(0 0 100% 0 round 0 0 80px 0); } to { clip-path: inset(0 round 0 0 35px 0); } }
 @keyframes menu-item { from { opacity: .3; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 .az-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
@@ -44,6 +44,9 @@ details[open] > summary .az-chevron { transform: rotate(180deg); }
 .az-header-cta { display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; flex-shrink: 0; min-height: 54px; padding: 15px 22px; background: var(--teal); color: var(--white); font-size: 16px; line-height: 1.4; transition: background .2s; }
 .az-header-cta:hover, .az-header-cta[aria-current] { background: var(--ink); }
 .az-header-cta svg { width: 19px; height: 19px; }
+.az-language-switch { display:inline-flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; flex:0 0 44px; font:600 14px/1 var(--sans); color:var(--ink); border:1px solid var(--line); border-radius:50%; }
+.az-language-switch:hover { background:var(--soft); border-color:var(--teal); }
+.az-language-switch:focus-visible { outline:2px solid var(--teal); outline-offset:4px; }
 .az-mega-menu { position: absolute; top: 100%; left: var(--gutter); right: var(--gutter); display: grid; grid-template-columns: .8fr 2fr; gap: 34px; padding: 36px; color: var(--ink); background: var(--paper-light); box-shadow: 0 24px 34px -16px rgb(22 59 57 / 22%); }
 .az-mega-intro { padding-right: 12px; }
 .az-mega-intro h2 { font: 500 clamp(27px, 2.2vw, 34px)/1.25 var(--serif); letter-spacing: -.025em; max-width: 11em; }
@@ -98,6 +101,8 @@ details[open] > summary .az-chevron { transform: rotate(180deg); }
   .az-brand-name > span { font-size: 11px; margin-top: 5px; }
   .az-header-cta { display: none; }
   .az-mobile-menu { margin-left: auto; }
+  .az-language-switch { margin-left:auto; }
+  .az-language-switch + .az-mobile-menu { margin-left:0; }
   .az-menu-toggle { min-width: 68px; gap: 9px; }
   .az-mobile-panel { max-height: calc(100dvh - 90px); padding-top: 16px; }
   .az-mobile-panel > .az-nav-link, .az-mobile-services > summary { font-size: 24px; padding-block: 16px; }
@@ -113,4 +118,6 @@ details[open] > summary .az-chevron { transform: rotate(180deg); }
   .az-brand-name { font-size: 22px; }
   .az-brand-name > span { font-size: 10px; }
   .az-menu-toggle { min-width: 56px; gap: 7px; font-size: 14px; padding-left: 0; }
+  .az-toggle-label { display:none; }
+  .az-menu-toggle { min-width:44px; }
 }

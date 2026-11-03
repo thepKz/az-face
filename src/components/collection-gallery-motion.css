@@ -1,0 +1,19 @@
+.collection-gallery .collection-filters { position:relative; gap:8px 22px; }
+.collection-gallery .collection-filters label { border-bottom:1px solid color-mix(in srgb,var(--ink) 20%,transparent); }
+.collection-gallery .collection-filters label > span { position:relative; padding:13px 5px; border-radius:0; background:transparent; color:var(--ink); font-size:16px; }
+.collection-gallery .collection-filters input:checked + span { background:transparent; color:var(--ink); }
+.collection-gallery .collection-filters input:checked + span::after { content:''; position:absolute; bottom:-1px; left:0; right:0; height:2px; background:currentColor; }
+.collection-gallery .collection-filters[data-motion-ready='true'] input:checked + span::after { display:none; }
+.collection-gallery .collection-filter-indicator { display:none; position:absolute; top:0; left:0; width:1px; height:2px; padding:0; background:var(--ink); pointer-events:none; transform-origin:left center; }
+.collection-gallery .collection-filters[data-motion-ready='true'] > .collection-filter-indicator { display:block; }
+.collection-gallery .collection-grid { overflow-anchor:none; }
+.collection-gallery .collection-photo button:focus-visible { outline:3px solid var(--ink); outline-offset:5px; }
+.collection-gallery .collection-photo__open { transition:transform .18s cubic-bezier(.16,1,.3,1); }
+.collection-gallery .collection-lightbox__controls button:focus-visible,.collection-gallery .collection-lightbox__close:focus-visible { outline:2px solid var(--ink); outline-offset:3px; }
+@media(max-width:600px) { .collection-gallery .collection-filters { gap:8px 16px; }.collection-gallery .collection-filters label > span { font-size:15px; } }
+@media(prefers-reduced-motion:reduce) {
+ .collection-gallery .collection-photo,.collection-gallery .collection-photo img { transform:none!important; opacity:1!important; }
+ .collection-gallery .collection-photo img,.collection-gallery .collection-photo__open { transition:none; }
+ .collection-gallery .collection-filters > .collection-filter-indicator { display:none!important; }
+ .collection-gallery .collection-filters input:checked + span::after { display:block!important; }
+}

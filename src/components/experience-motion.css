@@ -1,0 +1,38 @@
+.experience-page { --experience-header-height:112px; }
+.experience-page .experience-opening { min-height:min(820px,88svh); align-items:center; }
+.experience-page .experience-opening > figure { clip-path:ellipse(76% 92% at 78% 51%); }
+.experience-page .experience-opening::after { background:linear-gradient(90deg,#102f29ee 5%,#102f29b8 39%,#102f2920 76%); }
+.experience-page .experience-opening__copy { padding-block:80px 110px; }
+.experience-page .experience-opening h1 { max-width:9ch; font-size:clamp(48px,6.7vw,94px); line-height:1.12; }
+.experience-page .experience-opening__copy p { max-width:36ch; font-size:18px; }
+.experience-page .experience-opening__index { bottom:40px; }
+.experience-compass { position:sticky; top:var(--experience-header-height); z-index:25; display:grid; grid-template-columns:repeat(3,1fr); gap:20px; padding:12px var(--gutter); background:var(--paper); }
+.experience-compass > a { display:flex; align-items:center; justify-content:center; gap:12px; min-height:48px; color:var(--muted); font-size:15px; transition:color .2s; }
+.experience-compass > a::before { content:''; display:block; width:6px; height:6px; flex:0 0 6px; border-radius:50%; background:currentColor; transform:scale(0); transition:transform .25s var(--ease); }
+.experience-compass > a[aria-current] { color:var(--ink); font-weight:600; }
+.experience-compass > a[aria-current]::before { transform:scale(1); }
+.experience-compass > a:hover { color:var(--teal); }
+.experience-compass__track { position:absolute; bottom:0; left:var(--gutter); right:var(--gutter); height:2px; background:var(--line); overflow:hidden; }
+.experience-compass__track > span { display:block; width:100%; height:100%; background:var(--teal); transform:scaleX(0); transform-origin:left; }
+.experience-page :is(#lang-nghe,#cham-chut,#tiep-noi) { scroll-margin-top:calc(var(--experience-header-height) + 88px); }
+.experience-page .experience-chapter__image { border-radius:32% 54% 42% 18%; }
+.experience-page .experience-ritual { background:#dfe7dd; padding-top:72px; margin-bottom:70px; }
+.experience-page .experience-ritual > figure { width:calc(100% - var(--gutter) * 2); margin-inline:auto; border-radius:28% 9% 24% 7% / 24% 15% 24% 12%; }
+.experience-page .experience-close > figure { border-radius:48% 46% 42% 20%; }
+@media(max-width:760px) {
+  .experience-page { --experience-header-height:88px; }
+  .experience-page .experience-opening { min-height:680px; align-items:flex-end; }
+  .experience-page .experience-opening > figure { clip-path:ellipse(100% 78% at 68% 18%); }
+  .experience-page .experience-opening::after { background:linear-gradient(0deg,#102f29 4%,#102f29d9 33%,#102f2930 80%); }
+  .experience-page .experience-opening__copy { padding-block:60px; }
+  .experience-page .experience-opening h1 { font-size:clamp(44px,10vw,64px); max-width:11ch; }
+  .experience-page .experience-opening__copy p { font-size:16px; }
+  .experience-compass { gap:6px; padding-block:8px; }
+  .experience-compass > a { font-size:12px; min-height:44px; gap:6px; line-height:1.4; }
+  .experience-page .experience-ritual { padding-top:50px; margin-bottom:45px; }
+  .experience-page .experience-ritual > figure { width:calc(100% - 32px); border-radius:30% 12% 20% 8%; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .experience-compass > a::before { transition:none; }
+  .experience-page .experience-opening > figure { clip-path:none; }
+}

@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 const config: NextConfig = {
   reactStrictMode: true, poweredByHeader: false, devIndicators: false,
   agentRules: false,
@@ -10,4 +11,4 @@ const config: NextConfig = {
     { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   ] }] },
 }
-export default config
+export default createNextIntlPlugin('./src/i18n/request.ts')(config)

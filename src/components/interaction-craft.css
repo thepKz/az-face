@@ -1,0 +1,60 @@
+/* The ink sweep echoes the portrait contour without moving a control's hit area. */
+:is(.button, .az-header-cta, .az-mobile-contact) {
+  --interaction-fill: var(--ink);
+  --interaction-ink: var(--paper);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color .2s, background .2s, transform .14s cubic-bezier(.16,1,.3,1);
+}
+:is(.button, .az-header-cta, .az-mobile-contact)::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--interaction-fill);
+  clip-path: circle(0% at 88% 100%);
+  transition: clip-path .48s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.button-light { --interaction-fill: #dfe8df; --interaction-ink: var(--ink); }
+.button-outline-light { --interaction-fill: var(--paper); --interaction-ink: var(--ink); }
+.consultation-inner .button { --interaction-fill: var(--teal); --interaction-ink: var(--paper); }
+.atelier-home .ritual-journey .button { --interaction-fill: var(--ink); --interaction-ink: var(--paper); }
+:is(.button, .az-header-cta, .az-mobile-contact):focus-visible::before { clip-path: circle(150% at 88% 100%); }
+:is(.button, .az-header-cta, .az-mobile-contact):focus-visible { color: var(--interaction-ink); }
+:is(.button, .az-header-cta, .az-mobile-contact):active { transform: scale(.985); }
+:is(.button, .az-header-cta, .az-mobile-contact):disabled { transform: none; }
+:is(.button, .az-header-cta, .az-mobile-contact):disabled::before { clip-path: circle(0% at 88% 100%); }
+
+.az-language-switch { transition: background .22s, border-color .22s, color .22s, transform .14s; }
+.az-language-switch:active { transform: scale(.92); }
+.az-mega-service > img { transition: border-radius .55s cubic-bezier(.16,1,.3,1); }
+.az-mega-service:focus-visible > img { border-radius: 70px 55px 70px 8px; }
+.az-nav-link:focus-visible::after { transform: scaleX(1); }
+.az-nav-link::after { transform-origin: right; }
+.az-nav-link:is(:hover,:focus-visible)::after { transform-origin: left; }
+.az-header-cta svg, .az-mobile-contact svg { transition: transform .3s var(--ease); }
+
+@media (hover:hover) and (pointer:fine) {
+  :is(.button, .az-header-cta, .az-mobile-contact):hover::before { clip-path: circle(150% at 88% 100%); }
+  :is(.button, .az-header-cta, .az-mobile-contact):hover { color: var(--interaction-ink); }
+  .button-dark:hover, .az-header-cta:hover { background: var(--teal); }
+  .button-light:hover { background: var(--paper); }
+  .consultation-inner .button:hover { background: var(--ink); }
+  .atelier-home .ritual-journey .button:hover { background: transparent; }
+  :is(.button, .az-header-cta, .az-mobile-contact):hover > svg { animation: arrow-through .48s cubic-bezier(.16,1,.3,1); }
+  .az-mega-service:hover > img { border-radius: 70px 55px 70px 8px; }
+  .az-language-switch:hover { background: var(--ink); color: var(--paper); }
+}
+@keyframes arrow-through {
+  0% { transform: translateX(0); opacity: 1; }
+  35% { transform: translateX(100%); opacity: 0; }
+  36% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(4px); opacity: 1; }
+}
+@media (prefers-reduced-motion:reduce) {
+  :is(.button, .az-header-cta, .az-mobile-contact)::before { display: none; }
+  :is(.button, .az-header-cta, .az-mobile-contact):is(:hover,:focus-visible) { background: var(--interaction-fill); color: var(--interaction-ink); }
+  :is(.button, .az-header-cta, .az-mobile-contact, .az-language-switch):active { transform: none; }
+}
