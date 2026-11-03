@@ -1,0 +1,53 @@
+.brand-signature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 88px);
+  padding: clamp(32px, 5vw, 72px);
+  margin-block: clamp(48px, 7vw, 100px);
+  margin-inline: auto;
+  max-width: 1600px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+.brand-signature__art { text-align: center; min-width: 0; }
+.brand-signature__art > svg { display: block; width: min(100%, 340px); height: auto; margin: 0 auto 28px; }
+.brand-signature__copy { min-width: 0; }
+.brand-signature__copy h2 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.2vw, 46px);
+  line-height: 1.2;
+  font-weight: 400;
+  max-width: 15ch;
+  text-wrap: balance;
+  margin: 0 0 26px;
+}
+.brand-signature__copy > p { font-size: 16px; line-height: 1.8; max-width: 52ch; margin: 0 0 18px; }
+.brand-signature__replay, .brand-signature__video-toggle {
+  font: inherit;
+  font-size: 14px;
+  min-height: 44px;
+  padding: 11px 16px;
+  cursor: pointer;
+  border-radius: 0;
+  line-height: 1.5;
+}
+.brand-signature__replay { color: var(--ink); border: 1px solid currentColor; background: transparent; }
+.brand-signature__replay:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
+.brand-signature__replay:disabled { cursor: default; border-style: dashed; opacity: 1; }
+.brand-signature__video-toggle { display: inline-block; margin-top: 10px; color: var(--paper); background: var(--ink); border: 1px solid var(--ink); }
+.brand-signature__video-toggle:hover { background: var(--teal); border-color: var(--teal); }
+.brand-signature button:focus-visible, .brand-signature video:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+.brand-signature .brand-signature__note { font-size: 13px; line-height: 1.7; margin: 12px 0 0; }
+.brand-signature__video { margin-top: 24px; }
+.brand-signature__video[hidden] { display: none; }
+.brand-signature__video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--paper); }
+@media (max-width: 700px) {
+  .brand-signature { grid-template-columns: minmax(0, 1fr); padding: 28px 20px; gap: 36px; }
+  .brand-signature__art > svg { width: min(80%, 260px); }
+  .brand-signature__copy h2 { max-width: 18ch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-signature [data-signature-layer] { opacity: 1 !important; }
+}
