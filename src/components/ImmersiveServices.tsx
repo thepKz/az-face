@@ -18,11 +18,36 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
   const [ready, setReady] = useState(false)
   const [current, setCurrent] = useState(0)
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
+  const root = useRef<HTMLElement>(null)
   const available = chapters.flatMap(chapter => {
     const service = services.find(item => item.slug === chapter.slug)
     return service ? [{ ...chapter, service }] : []
   })
   useEffect(() => { setReady(true) }, [])
+  useEffect(() => {
+    if (!ready || !root.current) return
+    let cancelled = false
+    let dispose = () => {}
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+      if (cancelled || !root.current) return
+      gsap.registerPlugin(ScrollTrigger)
+      const media = gsap.matchMedia()
+      media.add({ desktop: '(min-width: 901px)', mobile: '(max-width: 900px)', motion: '(prefers-reduced-motion: no-preference)' }, match => {
+        if (!match.conditions?.motion) return
+        const context = gsap.context(() => {
+          const scene = gsap.timeline({ scrollTrigger: { id: 'az-service-panorama', trigger: root.current!.querySelector('.immersive-services__navigation'), start: 'top 96%', end: 'top 30%', scrub: .55 } })
+          tabs.current.forEach((tab, index) => {
+            if (!tab) return
+            scene.fromTo(tab, { yPercent: index === 1 ? 25 : 12, rotationX: match.conditions?.desktop ? -32 : -15, rotationZ: index === 1 ? 0 : (index === 0 ? -7 : 7), scale: .88 }, { yPercent: 0, rotationX: 0, rotationZ: 0, scale: 1, duration: 1, ease: 'power2.out' }, index * .09)
+          })
+        }, root)
+        return () => context.revert()
+      })
+      dispose = () => media.revert()
+      document.fonts.ready.then(() => { if (!cancelled) ScrollTrigger.refresh() })
+    }).catch(() => {})
+    return () => { cancelled = true; dispose() }
+  }, [ready, services.length])
   const active = Math.min(current, Math.max(0, available.length - 1))
   const selectWithKeyboard = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     let next = index
@@ -36,14 +61,15 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
     tabs.current[next]?.focus()
   }
 
-  return <section className="immersive-services" id="dich-vu" data-ready={ready} aria-labelledby="immersive-services-title">
+  return <section className="immersive-services" id="dich-vu" ref={root} data-ready={ready} aria-labelledby="immersive-services-title">
     <header className="immersive-services__heading">
       <h2 id="immersive-services-title">{en ? 'What would you like to explore?' : 'Bạn muốn chăm chút điều gì?'}</h2>
       <p>{en ? 'Choose a focus. See the details. Take the time you need.' : 'Chọn điều bạn quan tâm, nhìn kỹ hơn và tìm hiểu theo nhịp của bạn.'}</p>
     </header>
-    {ready && available.length > 0 && <div className="immersive-services__navigation" role="tablist" aria-label={en ? 'Service focus' : 'Nhóm dịch vụ'}>
-      {available.map((chapter, index) => <button key={chapter.slug} ref={element => { tabs.current[index] = element }} type="button" role="tab" id={`service-tab-${chapter.slug}`} aria-controls={`home-service-${chapter.slug}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} onClick={() => setCurrent(index)} onKeyDown={event => selectWithKeyboard(event, index)}><span>{en ? chapter.labelEn : chapter.labelVi}</span><ArrowIcon /></button>)}
+    {ready && available.length > 0 && <div className="immersive-services__navigation" role="tablist" style={{ gridTemplateColumns: available.map((_, index) => index === active ? '1.65fr' : '1fr').join(' ') }} aria-label={en ? 'Service focus' : 'Nhóm dịch vụ'}>
+      {available.map((chapter, index) => <button key={chapter.slug} ref={element => { tabs.current[index] = element }} type="button" role="tab" id={`service-tab-${chapter.slug}`} aria-controls={`home-service-${chapter.slug}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} onClick={() => setCurrent(index)} onKeyDown={event => selectWithKeyboard(event, index)}><img src={`/images/${chapter.image}.webp`} width="1024" height="1280" loading="lazy" alt="" /><span className="immersive-services__tab-label">{en ? chapter.labelEn : chapter.labelVi}<ArrowIcon /></span><span className="immersive-services__tab-action" aria-hidden="true">{active === index ? (en ? 'Selected' : 'Đang xem') : (en ? 'Explore' : 'Khám phá')}</span></button>)}
     </div>}
+    {ready && available.length > 0 && <p className="immersive-services__image-note">{en ? 'Illustrative imagery' : 'Hình ảnh minh họa'}</p>}
     {available.length ? <div className="immersive-services__scenes">
       {available.map((chapter, index) => <article key={chapter.slug} className="immersive-services__chapter" id={`home-service-${chapter.slug}`} role={ready ? 'tabpanel' : undefined} aria-labelledby={ready ? `service-tab-${chapter.slug}` : undefined} aria-hidden={ready && active !== index} inert={ready && active !== index} data-active={!ready || active === index}>
         <div className="immersive-services__copy"><h3>{en ? chapter.en : chapter.vi}</h3><p>{chapter.service.summary}</p><Link href={`/dich-vu/${chapter.slug}`} className="immersive-services__link"><span>{en ? 'Explore this service' : 'Tìm hiểu dịch vụ'}</span><ArrowIcon /></Link></div>

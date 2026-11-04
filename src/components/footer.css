@@ -1,4 +1,8 @@
 .az-footer-climax { color:var(--ink); background:var(--paper); }
+.az-footer-curtain { display:none; }
+body:has(.cinema-home) .az-footer-curtain { display:block; height:clamp(100px,13vw,200px); background:#102f2a; overflow:hidden; }
+.az-footer-curtain svg { display:block; width:100%; height:100%; }
+.az-footer-curtain path { fill:#e8efad; }
 .az-footer-invitation { max-width:1600px; margin:auto; padding:76px var(--gutter) 72px; display:grid; grid-template-columns:100px 1fr; gap:5%; align-items:start; }
 .az-footer-logo { display:block; width:80px; }
 .az-footer-logo img { width:80px; height:80px; object-fit:contain; }
@@ -8,7 +12,8 @@
 .az-footer-cta-icon svg { width:25px; height:25px; }
 .az-footer-invitation h2 a:hover .az-footer-cta-icon { background:var(--ink); transform:rotate(-35deg); }
 .az-footer-promise { font:400 17px/1.65 var(--sans); margin-top:20px; color:var(--muted); }
-.az-footer-stage { background:var(--ink); color:var(--paper); padding:58px var(--gutter) 16px; overflow:hidden; }
+.az-footer-stage { background:var(--ink); color:var(--paper); padding:58px var(--gutter) 16px; overflow:hidden; position:relative; isolation:isolate; }
+body:has(.cinema-home) .az-footer-stage::before { content:''; position:absolute; z-index:-1; inset:0; background:linear-gradient(180deg,#102f2aed,#102f2a9c),url('/images/campaign-hero-main.webp') 68% 48% / cover no-repeat; clip-path:ellipse(var(--footer-aperture,110%) 100% at 50% 100%); pointer-events:none; }
 .az-footer-utilities { display:grid; grid-template-columns:1.4fr .8fr 1fr; gap:7%; max-width:1424px; margin:auto; }
 .az-footer-identity p { font:400 26px/1.4 var(--serif); margin-bottom:28px; max-width:18ch; }
 .az-footer-identity span { display:block; font:400 14px/1.8 var(--sans); }
@@ -17,8 +22,8 @@
 .az-footer-utilities nav a { display:inline-flex; align-items:center; gap:12px; min-height:44px; font:400 17px/1.55 var(--sans); text-decoration:underline; text-decoration-color:transparent; text-underline-offset:6px; }
 .az-footer-utilities nav a:hover { text-decoration-color:currentColor; }
 .az-footer-utilities nav svg { width:20px; height:20px; }
-.az-footer-display { display:flex; align-items:baseline; justify-content:space-between; gap:.12em; max-width:1600px; margin:68px auto 20px; overflow:hidden; padding-block:.06em .14em; font:500 clamp(56px,20.8vw,360px)/.86 var(--serif); letter-spacing:-.04em; }
-.az-footer-display-group { display:flex; }
+.az-footer-display { display:flex; align-items:baseline; justify-content:space-between; gap:.12em; max-width:1600px; margin:68px auto 20px; overflow:hidden; padding-block:.06em .14em; font:500 clamp(56px,20.8vw,360px)/.86 var(--serif); letter-spacing:-.04em; perspective:1000px; }
+.az-footer-display-group { display:flex; transform-origin:50% 75%; }
 .az-footer-letter { display:inline-block; }
 .az-footer-baseline { max-width:1424px; margin:auto; display:flex; align-items:center; gap:32px; justify-content:space-between; font:400 14px/1.6 var(--sans); }
 .az-footer-baseline a { display:inline-flex; align-items:center; gap:10px; min-height:44px; }
@@ -48,5 +53,7 @@
 }
 @media(prefers-reduced-motion:reduce) {
  .az-footer-letter { transform:none!important; opacity:1!important; }
+ .az-footer-display-group { transform:none!important; }
+ .az-footer-stage::before { clip-path:none!important; }
  .az-footer-cta-icon { transition:none; }
 }

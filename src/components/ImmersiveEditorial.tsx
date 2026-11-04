@@ -30,19 +30,22 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
         const context = gsap.context(() => {
           const frames = root.current!.querySelectorAll<HTMLElement>('.im-editorial-photo')
           const offsets = desktop
-            ? [{ x: 112, y: 8, r: -14 }, { x: 38, y: 2, r: 9 }, { x: -38, y: 8, r: -8 }, { x: -112, y: 2, r: 13 }]
-            : [{ x: 12, y: 8, r: -10 }, { x: -12, y: 12, r: 9 }, { x: -10, y: -5, r: 8 }, { x: 10, y: -8, r: -9 }]
-          // Scrolling unfolds a photographic edit into its finished contact sheet.
+            ? [{ x: 116, y: 18, r: -28 }, { x: 36, y: 10, r: -13 }, { x: -42, y: 18, r: 14 }, { x: -122, y: 8, r: 29 }]
+            : [{ x: 35, y: 20, r: -18 }, { x: -35, y: 18, r: 17 }, { x: -28, y: -14, r: 15 }, { x: 28, y: -18, r: -16 }]
+          const restingAngles = desktop ? [-8, -3, 4, 9] : [-4, 4, 3, -3]
+          // One photographic fan opens across the stage; labels move with their own print.
           const scene = gsap.timeline({ scrollTrigger: {
+            id: 'az-editorial-fan',
             trigger: root.current!.querySelector('.im-editorial-sheet'),
-            start: 'top 95%', end: 'bottom 78%', scrub: .65,
+            start: 'top 92%', end: 'bottom 42%', scrub: .8,
             invalidateOnRefresh: true,
           } })
           frames.forEach((frame, index) => {
             const offset = offsets[index]
             scene.fromTo(frame,
-              { xPercent: offset.x, yPercent: offset.y, rotation: offset.r, rotateY: desktop ? (index % 2 ? -16 : 16) : 0, scale: desktop ? .78 : .9 },
-              { xPercent: 0, yPercent: 0, rotation: 0, rotateY: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, index * .08)
+              { xPercent: offset.x, yPercent: offset.y, rotation: offset.r, rotateY: desktop ? (index % 2 ? -48 : 48) : 0, scale: desktop ? .62 : .82 },
+              { xPercent: 0, yPercent: 0, rotation: restingAngles[index], rotateY: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, index * .07)
+            scene.fromTo(frame.querySelector('img'), { scale: 1.2, yPercent: index % 2 ? -5 : 5 }, { scale: 1, yPercent: 0, ease: 'none', duration: 1.2 }, index * .07)
           })
         }, root)
         return () => context.revert()

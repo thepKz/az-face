@@ -83,37 +83,28 @@ export function ImmersiveJourney() {
             const picture = chapter.querySelector('[data-journey-window]')
             const image = chapter.querySelector('[data-journey-image]')
             const detail = chapter.querySelector('[data-journey-detail]')
-            const direction = index % 2 ? -1 : 1
-            const shapes = [
-              ['48% 48% 6% 6%', '12% 42% 12% 42%'],
-              ['6% 45% 6% 45%', '42% 10% 42% 10%'],
-              ['45% 45% 40% 4%', '8% 44% 8% 44%'],
+            const amount = desktop ? 1 : .55
+            // Each folio has its own arrival: hinge, panorama, then a portrait rising from depth.
+            const openings = [
+              { rotationY: -52 * amount, rotationX: 8 * amount, rotation: -8 * amount, scale: desktop ? .72 : .84, xPercent: -12 * amount, yPercent: 8 * amount, clipPath: 'inset(0% 0% 0% 0%)' },
+              { rotationY: 30 * amount, rotationX: 0, rotation: 5 * amount, scale: desktop ? .84 : .91, xPercent: 18 * amount, yPercent: 0, clipPath: `inset(0% ${desktop ? 26 : 14}% 0% ${desktop ? 26 : 14}%)` },
+              { rotationY: 0, rotationX: 42 * amount, rotation: 8 * amount, scale: desktop ? .68 : .83, xPercent: 0, yPercent: 20 * amount, clipPath: 'inset(0% 0% 0% 0%)' },
             ]
-            // The curtain owns clip-path; scroll owns geometry and the two photo planes.
-            const reveal = gsap.timeline({ scrollTrigger: { trigger: picture, start: 'top 88%', once: true } })
-            reveal.fromTo(picture,
-              { clipPath: index === 1 ? 'inset(0 0 100% 0)' : 'inset(0 100% 0 0)' },
-              { clipPath: 'inset(0 0% 0% 0)', duration: 1.15, ease: 'expo.out' })
-            if (detail) reveal.fromTo(detail, { opacity: 0 }, { opacity: 1, duration: .65, ease: 'power2.out' }, .2)
-
             const scene = gsap.timeline({
-              defaults: { ease: 'none', duration: 1 },
+              defaults: { ease: 'power2.out', duration: 1 },
               scrollTrigger: {
-                id: `journey-depth-${index + 1}`,
+                id: `journey-folio-${index + 1}`,
                 trigger: chapter.querySelector('.journey-cinema__composition'),
-                start: 'top bottom', end: 'bottom top', scrub: desktop ? .7 : .4,
+                start: 'top 94%', end: 'center 42%', scrub: desktop ? .7 : .4,
                 invalidateOnRefresh: true,
               },
             })
-            scene.fromTo(picture,
-              { borderRadius: shapes[index][0], rotation: direction * (desktop ? -4 : -1.5) },
-              { borderRadius: shapes[index][1], rotation: direction * (desktop ? 4 : 1.5) }, 0)
-              .fromTo(image,
-                { yPercent: direction * (desktop ? -7 : -4), scale: desktop ? 1.28 : 1.18 },
-                { yPercent: direction * (desktop ? 7 : 4), scale: desktop ? 1.19 : 1.13 }, 0)
+            scene.fromTo(picture, openings[index],
+              { rotationY: 0, rotationX: 0, rotation: 0, scale: 1, xPercent: 0, yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)' }, 0)
+              .fromTo(image, { scale: desktop ? 1.38 : 1.2, yPercent: -5 }, { scale: 1.06, yPercent: 0 }, 0)
             if (detail) scene.fromTo(detail,
-              { yPercent: desktop ? 32 : 14, xPercent: direction * (desktop ? -10 : -3), rotation: direction * (desktop ? -9 : -4) },
-              { yPercent: desktop ? -32 : -14, xPercent: direction * (desktop ? 10 : 3), rotation: direction * (desktop ? 9 : 4) }, 0)
+              { yPercent: 35 * amount, xPercent: (index === 1 ? 70 : -65) * amount, rotationY: (index === 1 ? -48 : 48) * amount, rotation: (index === 1 ? -12 : 12) * amount, scale: .75, opacity: .35 },
+              { yPercent: 0, xPercent: 0, rotationY: 0, rotation: index === 1 ? -7 : 7, scale: 1, opacity: 1, duration: .85 }, .15)
           })
         }, section)
         return () => context.revert()
@@ -130,12 +121,12 @@ export function ImmersiveJourney() {
     {chapters.map((chapter, index) => {
       const copy = chapter[locale]
       return <article className={`journey-cinema__chapter journey-cinema__chapter--${index + 1}`} id={`journey-${chapter.id}`} key={chapter.id} data-journey-chapter>
+        <h2>{copy.verb}</h2>
         <div className="journey-cinema__composition">
           <figure className="journey-cinema__picture" data-journey-window><img src={chapter.image} alt={copy.alt} width="1024" height="1280" loading="lazy" data-journey-image /></figure>
           <figure className="journey-cinema__detail" data-journey-detail aria-hidden="true"><img src={['/images/journey-experience-arrival.webp', '/images/journey-service-skin-detail.webp', '/images/journey-about-detail.webp'][index]} alt="" width="768" height="1024" loading="lazy" /></figure>
         </div>
         <div className="journey-cinema__copy">
-          <h2>{copy.verb}</h2>
           <h3>{copy.title}</h3>
           <p>{copy.body}</p>
           <ul>{copy.questions.map(question => <li key={question}>{question}</li>)}</ul>
