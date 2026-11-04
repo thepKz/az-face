@@ -1,0 +1,66 @@
+.immersive-services { --services-header-height:112px; --services-chapters:3; position:relative; background:#102f2a; color:#f4f1e9; scroll-margin-top:112px; }
+.immersive-services__stage { position:relative; }
+.immersive-services__heading { display:flex; justify-content:space-between; align-items:center; gap:26px 48px; padding:32px var(--gutter); background:#102f2a; color:#f4f1e9; }
+.immersive-services__heading h2 { max-width:19ch; font:600 clamp(26px,2.45vw,38px)/1.18 var(--sans); letter-spacing:-.035em; text-wrap:balance; }
+.immersive-services__navigation { display:flex; gap:26px; align-self:stretch; align-items:center; }
+.immersive-services__navigation a { display:flex; align-items:center; gap:10px; min-height:48px; font-size:15px; white-space:nowrap; }
+.immersive-services__navigation svg { width:18px; height:18px; opacity:0; transform:translateX(-9px); transition:opacity .2s,transform .3s var(--ease); }
+.immersive-services__navigation a[aria-current] { color:#e8efad; }
+.immersive-services__navigation a:is([aria-current],:hover,:focus-visible) svg { opacity:1; transform:translateX(0); }
+.immersive-services__viewport { position:relative; }
+.immersive-services__track { position:relative; }
+.immersive-services__chapter { --scene-ground:#102f2a; --scene-ink:#f4f1e9; --scene-accent:#e8efad; position:relative; isolation:isolate; min-height:660px; overflow:hidden; background:var(--scene-ground); color:var(--scene-ink); display:flex; align-items:center; scroll-margin-top:130px; }
+.immersive-services__chapter--celadon { --scene-ground:#e8efad; --scene-ink:#102f2a; --scene-accent:#102f2a; }
+.immersive-services__chapter--ivory { --scene-ground:#f4f1e9; --scene-ink:#102f2a; --scene-accent:#17685d; }
+.immersive-services__picture { position:absolute; inset:0 0 0 30%; z-index:-2; margin:0; overflow:hidden; mask-image:linear-gradient(to right,transparent 0%,#000 28%); }
+.immersive-services__picture img { display:block; width:100%; height:100%; object-fit:cover; object-position:50% 38%; }
+.immersive-services__chapter--celadon .immersive-services__picture img { object-position:50% 46%; }
+.immersive-services__copy { position:relative; z-index:2; width:48%; padding:50px 24px 70px var(--gutter); }
+.immersive-services__copy h3 { font:600 clamp(56px,7.2vw,104px)/1.02 var(--sans); letter-spacing:-.04em; max-width:8ch; text-wrap:balance; }
+.immersive-services__copy p { max-width:34ch; font-size:clamp(16px,1.25vw,19px); line-height:1.65; margin-top:30px; }
+.immersive-services__link { display:inline-flex; align-items:center; gap:32px; min-height:56px; padding:12px 0; margin-top:27px; font-size:16px; font-weight:600; color:var(--scene-accent); }
+.immersive-services__link span { background:linear-gradient(currentColor,currentColor) left bottom/100% 1px no-repeat; padding-bottom:5px; }
+.immersive-services__link svg { width:30px; height:30px; transition:transform .35s var(--ease); }
+.immersive-services__link:is(:hover,:focus-visible) svg { transform:translateX(12px); }
+.immersive-services__link:active svg { transform:translateX(18px) scale(.9); }
+.immersive-services__running-word { position:absolute; left:56%; bottom:-.23em; z-index:1; font:650 clamp(96px,13vw,210px)/1 var(--sans); letter-spacing:-.04em; white-space:nowrap; color:#fff; opacity:.24; pointer-events:none; }
+.immersive-services__empty { padding:36px var(--gutter) 70px; }
+.immersive-services__empty a { display:inline-flex; align-items:center; gap:20px; margin-top:24px; }
+.immersive-services :is(a,button):focus-visible { outline:2px solid currentColor; outline-offset:6px; }
+
+.immersive-services[data-enhanced=true] { height:calc((100svh - var(--services-header-height)) * var(--services-chapters)); }
+.immersive-services[data-enhanced=true] .immersive-services__stage { position:sticky; top:var(--services-header-height); height:calc(100svh - var(--services-header-height)); display:flex; flex-direction:column; }
+.immersive-services[data-enhanced=true] .immersive-services__heading { flex:0 0 auto; padding-block:24px; }
+.immersive-services[data-enhanced=true] .immersive-services__viewport { flex:1; min-height:0; overflow:hidden; }
+.immersive-services[data-enhanced=true] .immersive-services__track { display:flex; width:100%; height:100%; }
+.immersive-services[data-enhanced=true] .immersive-services__chapter { flex:0 0 100%; min-width:0; min-height:0; height:100%; }
+
+@media(max-width:1000px) {
+  .immersive-services__heading { flex-direction:column; align-items:flex-start; gap:20px; }
+  .immersive-services__heading h2 { max-width:25ch; }
+  .immersive-services__navigation { gap:30px; flex-wrap:wrap; }
+  .immersive-services__chapter { min-height:590px; }
+  .immersive-services__copy { width:54%; }
+  .immersive-services__copy h3 { font-size:clamp(52px,7.4vw,76px); }
+}
+@media(max-width:680px) {
+  .immersive-services { scroll-margin-top:88px; }
+  .immersive-services__heading { padding-block:30px 20px; gap:15px; }
+  .immersive-services__heading h2 { font-size:30px; max-width:18ch; }
+  .immersive-services__navigation { gap:4px 18px; }
+  .immersive-services__navigation a { font-size:13px; gap:5px; }
+  .immersive-services__navigation svg { width:15px; height:15px; }
+  .immersive-services__chapter { display:block; min-height:0; padding-top:0; scroll-margin-top:88px; }
+  .immersive-services__picture { position:relative; inset:auto; z-index:0; height:clamp(330px,103vw,480px); mask-image:linear-gradient(#000 70%,transparent 100%); }
+  .immersive-services__picture img { object-position:50% 32%; }
+  .immersive-services__copy { width:100%; margin-top:-58px; padding:0 var(--gutter) 52px; }
+  .immersive-services__copy h3 { max-width:11ch; font-size:clamp(44px,11vw,64px); }
+  .immersive-services__copy p { max-width:40ch; margin-top:22px; font-size:16px; }
+  .immersive-services__link { margin-top:18px; min-height:52px; }
+  .immersive-services__running-word { display:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .immersive-services__picture { clip-path:none!important; }
+  .immersive-services__track { transform:none!important; }
+  .immersive-services__navigation svg,.immersive-services__link svg { transition:none; }
+}
