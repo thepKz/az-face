@@ -81,7 +81,7 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
           }
           if (contentOverflows()) { fallback(); return }
           context = gsap.context(() => {
-            const scene = gsap.timeline({ scrollTrigger: { id: 'az-service-theater', trigger: section, start: 'top top', end: () => `+=${Math.round(window.innerHeight * panels.length * .85)}`, pin: true, pinSpacing: true, scrub: .7, invalidateOnRefresh: true } })
+            const scene = gsap.timeline({ scrollTrigger: { id: 'az-service-theater', trigger: section, start: 'top top', end: () => `+=${Math.round(window.innerHeight * panels.length * .85)}`, pin: true, pinSpacing: true, scrub: .7, invalidateOnRefresh: true, refreshPriority: 20 } })
             panels.forEach((panel, index) => {
               const start = index * 2
               if (index) {
@@ -104,8 +104,16 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
             seek.current = index => {
               const trigger = scene.scrollTrigger!
               const time = Math.min(scene.duration(), index * 2 + .7)
-              trigger.scroll(trigger.start + time / scene.duration() * (trigger.end - trigger.start))
-              scene.time(time)
+              // Native smooth scrolling must not race an explicit timeline seek.
+              const html = document.documentElement
+              const previousBehavior = html.style.scrollBehavior
+              html.style.scrollBehavior = 'auto'
+              try {
+                trigger.scroll(trigger.start + time / scene.duration() * (trigger.end - trigger.start))
+                trigger.update()
+                trigger.getTween()?.progress(1)
+                scene.time(time)
+              } finally { html.style.scrollBehavior = previousBehavior }
               setCurrent(index)
             }
           }, section)
@@ -152,7 +160,7 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
     else return
     event.preventDefault()
     select(next)
-    tabs.current[next]?.focus()
+    tabs.current[next]?.focus({ preventScroll: true })
   }
 
   return <section className="immersive-services collage-host" id="dich-vu" ref={root} data-ready={ready} data-transitioning={transitioning} aria-labelledby="immersive-services-title">

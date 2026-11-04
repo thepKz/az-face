@@ -41,7 +41,7 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
             trigger: root.current!.querySelector('.im-editorial-sheet'),
             start: desktop ? 'center center' : 'top 88%',
             end: desktop ? () => `+=${Math.round(window.innerHeight * .7)}` : 'bottom 45%',
-            pin: Boolean(desktop && window.innerHeight >= 650), pinSpacing: true, scrub: .8,
+            pin: Boolean(desktop && window.innerHeight >= 650), pinSpacing: true, scrub: .8, refreshPriority: 10,
             invalidateOnRefresh: true,
           } })
           frames.forEach((frame, index) => {

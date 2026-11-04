@@ -44,7 +44,7 @@ export function ImmersiveHero() {
             id: 'az-portrait-shutter', trigger: cover,
             start: desktop ? 'top top' : 'top 15%',
             end: desktop ? () => `+=${Math.round(window.innerHeight * .72)}` : 'bottom top',
-            pin: desktop, pinSpacing: desktop, scrub: .65, invalidateOnRefresh: true,
+            pin: desktop, pinSpacing: desktop, scrub: .65, invalidateOnRefresh: true, refreshPriority: 30,
           } })
           scene.to('.cinema-hero__scroll-path', { morphSVG: aperture.cinema, duration: 1, ease: 'power1.inOut' }, 0)
             .to('.cinema-hero__portal', { scale: desktop ? 1.48 : 1.12, yPercent: 0, duration: 1, ease: 'power1.inOut' }, 0)

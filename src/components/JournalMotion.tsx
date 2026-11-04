@@ -38,7 +38,25 @@ export function JournalMotion({ children, className = '' }: { children: ReactNod
           if (body && progress) gsap.fromTo(progress, { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: body, start: 'top 60%', end: 'bottom 85%', scrub: true } })
         })
       }, root)
-      dispose = () => context.revert()
+      const scope = root.current
+      let frame = 0
+      const refresh = () => {
+        cancelAnimationFrame(frame)
+        frame = requestAnimationFrame(() => {
+          frame = requestAnimationFrame(() => { if (!cancelled) ScrollTrigger.refresh() })
+        })
+      }
+      const restore = (event: PageTransitionEvent) => { if (event.persisted) refresh() }
+      scope.addEventListener('load', refresh, true)
+      window.addEventListener('pageshow', restore)
+      document.fonts.ready.then(() => { if (!cancelled) refresh() })
+      refresh()
+      dispose = () => {
+        cancelAnimationFrame(frame)
+        scope.removeEventListener('load', refresh, true)
+        window.removeEventListener('pageshow', restore)
+        context.revert()
+      }
     }).catch(() => { /* Reading and form interactions do not depend on motion loading. */ })
     return () => { cancelled = true; dispose() }
   }, [])
