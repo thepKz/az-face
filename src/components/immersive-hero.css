@@ -22,7 +22,9 @@
 .cinema-hero__outro-copy{position:relative;max-width:650px;min-width:0}
 .cinema-hero__outro h2{font:600 clamp(42px,4.5vw,72px)/1.2 var(--sans);letter-spacing:-.035em;max-width:14ch;text-wrap:balance;margin:0}
 .cinema-hero__outro p{max-width:46ch;font:450 18px/1.75 var(--sans);margin-top:28px}
-.cinema-hero__portrait{position:relative;width:min(100%,540px);justify-self:center;margin:0 4% 4% 0;padding:14px;border:1px solid #102f2a55;border-radius:46% 46% 8% 8%;transform-origin:50% 80%}
+.cinema-hero__portrait{position:relative;width:min(100%,540px);justify-self:center;margin:0 4% 4% 0;padding:14px;transform-origin:50% 80%}
+.cinema-hero__contour{position:absolute;inset:-5%;width:110%;height:110%;overflow:visible;pointer-events:none}
+.cinema-hero__contour path{stroke:#102f2a;stroke-opacity:.55;stroke-width:1;vector-effect:non-scaling-stroke}
 .cinema-hero__portrait-inner{aspect-ratio:4/4.5;overflow:hidden;background:#163c34;border-radius:46% 46% 8% 8%}
 .cinema-hero__portrait-inner img{display:block;width:100%;height:100%;object-fit:cover;object-position:77% center}
 .cinema-hero__detail{position:absolute;width:35%;aspect-ratio:1;right:-6%;bottom:-6%;padding:7px;background:#e8efad;border:1px solid #102f2a55;border-radius:50%;overflow:hidden}

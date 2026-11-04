@@ -12,28 +12,39 @@ export function ImmersiveHero() {
   useEffect(() => {
     const section = root.current
     if (!section) return
-    const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
-    if (!motion.matches) return
     let cancelled = false
     let dispose = () => {}
-    import('gsap').then(({ gsap }) => {
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
       if (cancelled) return
-      const context = gsap.context(() => {
+      gsap.registerPlugin(ScrollTrigger)
+      const media = gsap.matchMedia()
+      media.add({ desktop: '(min-width: 901px)', mobile: '(max-width: 900px)', motion: '(prefers-reduced-motion: no-preference)' }, match => {
+        if (!match.conditions?.motion) return
+        const desktop = Boolean(match.conditions.desktop)
+        const context = gsap.context(() => {
         // Text remains readable throughout; motion never controls reading progress.
         gsap.from('.cinema-hero__image', { scale: 1.07, duration: 1.8, ease: 'expo.out', clearProps: 'transform' })
         gsap.from('.cinema-hero__word', { y: 22, rotation: .8, stagger: .09, duration: 1.15, ease: 'expo.out', clearProps: 'transform' })
         gsap.from('.cinema-hero__support', { y: 15, duration: 1.2, delay: .12, ease: 'expo.out', clearProps: 'transform' })
-      }, section)
-      const frame = section.querySelector<HTMLElement>('.cinema-hero__portrait')
-      const observer = new IntersectionObserver(entries => {
-        if (!frame || !entries.some(entry => entry.isIntersecting)) return
-        context.add(() => gsap.from(frame, { y: 28, rotation: -1.5, duration: 1.3, ease: 'expo.out', clearProps: 'transform' }))
-        observer.disconnect()
-      }, { threshold: .18 })
-      if (frame) observer.observe(frame)
-      const stop = () => { observer.disconnect(); context.revert() }
-      motion.addEventListener('change', stop, { once: true })
-      dispose = () => { stop(); motion.removeEventListener('change', stop) }
+          // The outer media owns scroll depth; the inner image owns the intro.
+          gsap.fromTo('.cinema-hero__media', { yPercent: 0, scale: 1 }, {
+            yPercent: desktop ? 12 : 6, scale: desktop ? 1.2 : 1.12, ease: 'none',
+            scrollTrigger: { id: 'az-hero-depth', trigger: section.querySelector('.cinema-hero__cover'), start: 'top top', end: 'bottom top', scrub: .65 },
+          })
+          const contour = section.querySelector<SVGPathElement>('.cinema-hero__contour path')!
+          const contourLength = contour.getTotalLength()
+          gsap.set(contour, { strokeDasharray: contourLength })
+          const portrait = gsap.timeline({ scrollTrigger: { id: 'az-portrait-compose', trigger: section.querySelector('.cinema-hero__outro'), start: 'top bottom', end: 'bottom top', scrub: .75 } })
+          portrait.fromTo('.cinema-hero__portrait', { y: desktop ? 65 : 25, rotation: desktop ? -7 : -3, scale: .92 }, { y: desktop ? -55 : -25, rotation: desktop ? 5 : 3, scale: 1, ease: 'none', duration: 1 }, 0)
+            .fromTo('.cinema-hero__portrait-inner', { borderRadius: '46% 46% 8% 8%' }, { borderRadius: '8% 46% 8% 46%', ease: 'none', duration: 1 }, 0)
+            .fromTo('.cinema-hero__portrait-inner img', { scale: 1.15, yPercent: -4 }, { scale: 1.15, yPercent: 4, ease: 'none', duration: 1 }, 0)
+            .fromTo('.cinema-hero__detail', { y: desktop ? 45 : 20, rotation: -12 }, { y: desktop ? -65 : -25, rotation: 12, ease: 'none', duration: 1 }, 0)
+            .fromTo(contour, { strokeDashoffset: contourLength }, { strokeDashoffset: 0, duration: .8, ease: 'none' }, 0)
+        }, section)
+        return () => context.revert()
+      })
+      dispose = () => media.revert()
+      document.fonts.ready.then(() => { if (!cancelled) ScrollTrigger.refresh() })
     }).catch(() => {})
     return () => { cancelled = true; dispose() }
   }, [])
@@ -53,6 +64,7 @@ export function ImmersiveHero() {
       <div className="cinema-hero__outro" id="goc-nhin">
         <div className="cinema-hero__outro-copy"><h2>{en ? 'Keep what makes you, you.' : 'Giữ điều làm nên bạn.'}</h2><p>{en ? 'A face is more than a set of features. It carries your expressions, your habits and your story. Aesthetic care starts by understanding what you want to change, and what you want to keep.' : 'Một gương mặt không chỉ là những đường nét. Đó còn là biểu cảm, thói quen và câu chuyện của bạn. Chăm chút diện mạo bắt đầu bằng việc hiểu điều muốn thay đổi và điều muốn giữ lại.'}</p><div className="cinema-hero__actions"><Link href="/gioi-thieu" className="cinema-text-link">{en ? 'Discover our perspective' : 'Tìm hiểu tinh thần AZ FACE'} <ArrowIcon /></Link></div></div>
         <figure className="cinema-hero__portrait">
+          <svg className="cinema-hero__contour" viewBox="0 0 500 570" fill="none" aria-hidden="true"><path d="M470 410 C490 260 460 24 264 22 C76 20 20 156 28 304 C36 458 136 548 278 546 C380 544 442 492 470 410 Z" /></svg>
           <div className="cinema-hero__portrait-inner"><img src="/images/campaign-hero-main.webp" width="1600" height="1067" loading="lazy" alt={en ? 'A closer look at the portrait, in natural light' : 'Một góc gần hơn của chân dung, trong ánh sáng tự nhiên'} /></div>
           <div className="cinema-hero__detail" aria-hidden="true"><img src="/images/campaign-hero-detail.webp" width="1000" height="1000" loading="lazy" alt="" /></div>
         </figure>

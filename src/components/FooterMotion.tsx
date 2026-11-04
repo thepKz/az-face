@@ -15,15 +15,20 @@ export function FooterMotion() {
       const media = gsap.matchMedia()
       media.add('(prefers-reduced-motion: no-preference)', () => {
         const context = gsap.context(() => {
-          gsap.fromTo('.az-footer-letter', { yPercent: 12, opacity: .55 }, {
-            yPercent: 0, opacity: 1, duration: .75, stagger: .055,
+          gsap.fromTo('.az-footer-letter', { yPercent: 65, rotation: 7, scaleY: .8, opacity: .35, transformOrigin: '50% 100%' }, {
+            yPercent: 0, rotation: 0, scaleY: 1, opacity: 1, duration: 1, stagger: .08,
             ease: 'power2.out',
-            scrollTrigger: { trigger: root.querySelector('.az-footer-display'), start: 'top 98%', once: true },
+            scrollTrigger: {
+              trigger: root.querySelector('.az-footer-display'),
+              start: 'top 98%', end: 'clamp(bottom 94%)', scrub: .45,
+              invalidateOnRefresh: true,
+            },
           })
         }, root)
         return () => context.revert()
       })
       dispose = () => media.revert()
+      document.fonts.ready.then(() => { if (!cancelled) ScrollTrigger.refresh() })
     }).catch(() => { /* The wordmark is visible without the optional animation. */ })
     return () => { cancelled = true; dispose() }
   }, [pathname])

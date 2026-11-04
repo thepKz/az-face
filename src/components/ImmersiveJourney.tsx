@@ -71,20 +71,49 @@ export function ImmersiveJourney() {
       if (cancelled) return
       gsap.registerPlugin(ScrollTrigger)
       const media = gsap.matchMedia()
-      media.add('(prefers-reduced-motion: no-preference)', () => {
+      media.add({
+        desktop: '(min-width: 901px)',
+        mobile: '(max-width: 900px)',
+        motion: '(prefers-reduced-motion: no-preference)',
+      }, mediaContext => {
+        if (!mediaContext.conditions?.motion) return
+        const desktop = mediaContext.conditions.desktop
         const context = gsap.context(() => {
           section.querySelectorAll<HTMLElement>('[data-journey-chapter]').forEach((chapter, index) => {
-            // Each photograph opens once like a curtain; reading never depends on scroll progress.
             const picture = chapter.querySelector('[data-journey-window]')
             const image = chapter.querySelector('[data-journey-image]')
             const detail = chapter.querySelector('[data-journey-detail]')
+            const direction = index % 2 ? -1 : 1
+            const shapes = [
+              ['48% 48% 6% 6%', '12% 42% 12% 42%'],
+              ['6% 45% 6% 45%', '42% 10% 42% 10%'],
+              ['45% 45% 40% 4%', '8% 44% 8% 44%'],
+            ]
+            // The curtain owns clip-path; scroll owns geometry and the two photo planes.
             const reveal = gsap.timeline({ scrollTrigger: { trigger: picture, start: 'top 88%', once: true } })
             reveal.fromTo(picture,
               { clipPath: index === 1 ? 'inset(0 0 100% 0)' : 'inset(0 100% 0 0)' },
               { clipPath: 'inset(0 0% 0% 0)', duration: 1.15, ease: 'expo.out' })
-              .fromTo(image, { scale: 1.12 }, { scale: 1, duration: 1.45, ease: 'expo.out' }, 0)
-            if (detail) reveal.fromTo(detail, { y: 28, rotation: -5, opacity: 0 },
-              { y: 0, rotation: 0, opacity: 1, duration: .9, ease: 'expo.out' }, .28)
+            if (detail) reveal.fromTo(detail, { opacity: 0 }, { opacity: 1, duration: .65, ease: 'power2.out' }, .2)
+
+            const scene = gsap.timeline({
+              defaults: { ease: 'none', duration: 1 },
+              scrollTrigger: {
+                id: `journey-depth-${index + 1}`,
+                trigger: chapter.querySelector('.journey-cinema__composition'),
+                start: 'top bottom', end: 'bottom top', scrub: desktop ? .7 : .4,
+                invalidateOnRefresh: true,
+              },
+            })
+            scene.fromTo(picture,
+              { borderRadius: shapes[index][0], rotation: direction * (desktop ? -4 : -1.5) },
+              { borderRadius: shapes[index][1], rotation: direction * (desktop ? 4 : 1.5) }, 0)
+              .fromTo(image,
+                { yPercent: direction * (desktop ? -7 : -4), scale: desktop ? 1.28 : 1.18 },
+                { yPercent: direction * (desktop ? 7 : 4), scale: desktop ? 1.19 : 1.13 }, 0)
+            if (detail) scene.fromTo(detail,
+              { yPercent: desktop ? 32 : 14, xPercent: direction * (desktop ? -10 : -3), rotation: direction * (desktop ? -9 : -4) },
+              { yPercent: desktop ? -32 : -14, xPercent: direction * (desktop ? 10 : 3), rotation: direction * (desktop ? 9 : 4) }, 0)
           })
         }, section)
         return () => context.revert()

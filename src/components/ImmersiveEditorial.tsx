@@ -23,19 +23,32 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
     Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
       if (cancelled || !root.current) return
       gsap.registerPlugin(ScrollTrigger)
-      const context = gsap.context(() => {
-        const media = gsap.matchMedia()
-        media.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+      const media = gsap.matchMedia()
+      media.add({ desktop: '(min-width: 900px)', mobile: '(max-width: 899px)', motion: '(prefers-reduced-motion: no-preference)' }, match => {
+        if (!match.conditions?.motion) return
+        const desktop = match.conditions.desktop
+        const context = gsap.context(() => {
           const frames = root.current!.querySelectorAll<HTMLElement>('.im-editorial-photo')
-          const offsets = [{ x: -30, y: 36, r: -13 }, { x: -12, y: -28, r: 9 }, { x: 18, y: 30, r: -8 }, { x: 32, y: -22, r: 12 }]
-          const scene = gsap.timeline({ scrollTrigger: { trigger: root.current!.querySelector('.im-editorial-sheet'), start: 'top 88%', once: true } })
+          const offsets = desktop
+            ? [{ x: 112, y: 8, r: -14 }, { x: 38, y: 2, r: 9 }, { x: -38, y: 8, r: -8 }, { x: -112, y: 2, r: 13 }]
+            : [{ x: 12, y: 8, r: -10 }, { x: -12, y: 12, r: 9 }, { x: -10, y: -5, r: 8 }, { x: 10, y: -8, r: -9 }]
+          // Scrolling unfolds a photographic edit into its finished contact sheet.
+          const scene = gsap.timeline({ scrollTrigger: {
+            trigger: root.current!.querySelector('.im-editorial-sheet'),
+            start: 'top 95%', end: 'bottom 78%', scrub: .65,
+            invalidateOnRefresh: true,
+          } })
           frames.forEach((frame, index) => {
             const offset = offsets[index]
-            scene.fromTo(frame, { xPercent: offset.x, yPercent: offset.y, rotation: offset.r, rotateY: index % 2 ? -12 : 12, scale: .82, clipPath: 'inset(7% 4% 7% 4%)' }, { xPercent: 0, yPercent: 0, rotation: 0, rotateY: 0, scale: 1, clipPath: 'inset(0% 0% 0% 0%)', ease: 'power3.out', duration: 1 }, index * .06)
+            scene.fromTo(frame,
+              { xPercent: offset.x, yPercent: offset.y, rotation: offset.r, rotateY: desktop ? (index % 2 ? -16 : 16) : 0, scale: desktop ? .78 : .9 },
+              { xPercent: 0, yPercent: 0, rotation: 0, rotateY: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, index * .08)
           })
-        })
-      }, root)
-      dispose = () => context.revert()
+        }, root)
+        return () => context.revert()
+      })
+      dispose = () => media.revert()
+      document.fonts.ready.then(() => { if (!cancelled) ScrollTrigger.refresh() })
     }).catch(() => { /* The composed photographs remain visible if motion cannot load. */ })
     return () => { cancelled = true; dispose() }
   }, [])
