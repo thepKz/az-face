@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl'
 
 import { useEffect, useRef, useState } from 'react'
 import { ArrowIcon } from './Icons'
+import { CollageArt } from './CollageArt'
 import './collection-gallery-motion.css'
 
 const photographs = [
@@ -35,6 +36,25 @@ export function CollectionGallery() {
   const closingTween = useRef<{ kill: () => void } | null>(null)
   const visible = photographs.filter(photo => filter === 'Tất cả' || photo.category === filter)
   const visibleIndexes = visible.map(photo => photographs.indexOf(photo))
+  useEffect(() => {
+    let cancelled = false
+    let cleanup = () => {}
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+      if (cancelled) return
+      gsap.registerPlugin(ScrollTrigger)
+      const media = gsap.matchMedia()
+      media.add('(prefers-reduced-motion: no-preference)', () => {
+        const context = gsap.context(() => {
+          document.querySelectorAll('.collection-intro__composition img').forEach((image, index) => {
+            gsap.fromTo(image, { rotation: index ? 20 : -18, yPercent: index ? 20 : -10, scale: .85 }, { rotation: index ? -4 : 5, yPercent: index ? -15 : 15, scale: 1, ease: 'none', scrollTrigger: { id: `collection-opening-${index}`, trigger: '.collection-intro', start: 'top 80%', end: 'bottom top', scrub: .7 } })
+          })
+        })
+        return () => context.revert()
+      })
+      cleanup = () => media.revert()
+    }).catch(() => {})
+    return () => { cancelled = true; cleanup() }
+  }, [])
   useEffect(() => {
     let cancelled = false
     let cleanup = () => {}
@@ -167,7 +187,7 @@ export function CollectionGallery() {
     setSelected(current => current === null ? visibleIndexes[0] : visibleIndexes[(visibleIndexes.indexOf(current) + step + visibleIndexes.length) % visibleIndexes.length])
   }
 
-  return <section className="page-width collection-gallery" aria-label={t("Thư viện ảnh")}>
+  return <section className="page-width collection-gallery collage-host" aria-label={t("Thư viện ảnh")}><CollageArt variant="ribbon" />
     <fieldset className="collection-filters" ref={controls}><legend className="sr-only">{t("Chọn chủ đề ảnh")}</legend>{filters.map(value => <label key={value}><input type="radio" name="collection-filter" value={value} checked={filter === value} onChange={() => changeFilter(value)} /><span>{t(value)}</span></label>)}<span className="collection-filter-indicator" data-filter-indicator aria-hidden="true" /></fieldset>
     <p className="collection-count" aria-live="polite">{visible.length} {t("góc nhìn")}</p>
     <div className="collection-grid" ref={grid}>{visible.map(photo => <figure className="collection-photo" key={photo.src} data-collection-photo={photo.src}><button aria-label={`${t('Xem ảnh:')} ${t(photo.title)}`} onClick={event => open(photographs.indexOf(photo), event.currentTarget)}><img src={`/images/${photo.src}.webp`} width="1024" height="1280" alt={t(photo.alt)} loading="lazy" /><span className="collection-photo__open" aria-hidden="true"><ArrowIcon /></span></button><figcaption><span>{t(photo.title)}</span><small>{t(photo.category)}</small></figcaption></figure>)}</div>

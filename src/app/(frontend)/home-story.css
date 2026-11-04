@@ -29,3 +29,12 @@ body:has(.cinema-home) .az-footer-identity p{font-family:var(--sans);font-size:2
 @media(max-width:900px){.cinema-questions{grid-template-columns:1fr;gap:36px;padding-block:28px 60px}.cinema-questions__intro{max-width:620px}.cinema-questions h2{max-width:18ch}.cinema-questions__intro>p{max-width:50ch}}
 @media(max-width:600px){.cinema-bridge{padding-bottom:55px}.cinema-bridge__type{font-size:48px;padding-block:15px}.cinema-bridge svg{height:65px}.cinema-questions h2{font-size:42px}.cinema-questions__intro>p{font-size:16px}.cinema-questions .faq-trigger{font-size:18px;padding-block:21px}.cinema-questions .faq-answer{font-size:16px}body:has(.cinema-home) .az-footer-invitation{grid-template-columns:1fr;padding-block:38px}body:has(.cinema-home) .az-footer-invitation h2{font-size:36px}}
 @media(prefers-reduced-motion:reduce){.cinema-bridge__type{transform:none!important}}
+
+.cinema-questions{background-image:linear-gradient(#073d46ed,#073d46ed),url('/images/elements/teal-liquid.webp');background-size:cover;overflow:clip;padding-block:80px 100px;align-items:start}
+.cinema-questions>.collage-art .collage-art__material{opacity:.035}
+.cinema-questions>.collage-art .collage-art__object--1{left:-22%;top:36%;width:42%;opacity:.4}
+.cinema-questions>.collage-art .collage-art__object--2{right:-40%;top:20%;opacity:.25}
+.cinema-questions>.collage-art .collage-art__object--3{right:48%;bottom:-12%;width:22%;opacity:.5}
+.cinema-questions .faq-list{background:#073d46e8;border:1px solid #63868b;border-radius:4px 40px 4px 4px;padding:8px 28px}
+.cinema-questions .faq-item:last-child{border-bottom:0}
+@media(max-width:600px){.cinema-questions{padding-block:50px 65px}.cinema-questions .faq-list{padding:4px 18px}.cinema-questions>.collage-art .collage-art__object--1{width:90%;left:-60%;opacity:.22}}

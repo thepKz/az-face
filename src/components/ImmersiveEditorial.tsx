@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl'
 import Link from '@/i18n/Link'
 import type { PublicPost } from '@/lib/cms'
 import { ArrowIcon } from './Icons'
+import { CollageArt } from './CollageArt'
 import './immersive-editorial.css'
 
 const photographs = [
@@ -32,20 +33,28 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
           const offsets = desktop
             ? [{ x: 116, y: 18, r: -28 }, { x: 36, y: 10, r: -13 }, { x: -42, y: 18, r: 14 }, { x: -122, y: 8, r: 29 }]
             : [{ x: 35, y: 20, r: -18 }, { x: -35, y: 18, r: 17 }, { x: -28, y: -14, r: 15 }, { x: 28, y: -18, r: -16 }]
-          const restingAngles = desktop ? [-8, -3, 4, 9] : [-4, 4, 3, -3]
+          const restingAngles = desktop ? [-10, -4, 5, 11] : [-4, 4, 3, -3]
           // One photographic fan opens across the stage; labels move with their own print.
           const scene = gsap.timeline({ scrollTrigger: {
-            id: 'az-editorial-fan',
+            id: 'az-gallery-assemble',
             trigger: root.current!.querySelector('.im-editorial-sheet'),
-            start: 'top 92%', end: 'bottom 42%', scrub: .8,
+            start: desktop ? 'center center' : 'top 88%',
+            end: desktop ? () => `+=${Math.round(window.innerHeight * .7)}` : 'bottom 45%',
+            pin: Boolean(desktop && window.innerHeight >= 650), pinSpacing: true, scrub: .8,
             invalidateOnRefresh: true,
           } })
           frames.forEach((frame, index) => {
             const offset = offsets[index]
             scene.fromTo(frame,
-              { xPercent: offset.x, yPercent: offset.y, rotation: offset.r, rotateY: desktop ? (index % 2 ? -48 : 48) : 0, scale: desktop ? .62 : .82 },
+              { xPercent: offset.x, yPercent: offset.y, rotation: offset.r, rotateY: desktop ? (index % 2 ? -48 : 48) : 0, scale: desktop ? .72 : .84 },
               { xPercent: 0, yPercent: 0, rotation: restingAngles[index], rotateY: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, index * .07)
             scene.fromTo(frame.querySelector('img'), { scale: 1.2, yPercent: index % 2 ? -5 : 5 }, { scale: 1, yPercent: 0, ease: 'none', duration: 1.2 }, index * .07)
+          })
+          root.current!.querySelectorAll<HTMLElement>('.im-editorial-stories article').forEach((article, index) => {
+            gsap.fromTo(article, { rotationY: desktop ? -28 : 0, rotation: desktop ? (index % 2 ? 7 : -7) : 0, y: desktop ? 90 : 28, transformOrigin: '0% 50%' }, {
+              rotationY: 0, rotation: 0, y: 0, ease: 'power2.out',
+              scrollTrigger: { id: `az-journal-sheet-${index + 1}`, trigger: article, start: 'top 88%', end: 'center 56%', scrub: .55 },
+            })
           })
         }, root)
         return () => context.revert()
@@ -57,12 +66,14 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
   }, [])
 
   return <div ref={root} className="im-editorial">
-    <section className="im-editorial-gallery" aria-labelledby="im-gallery-title">
+    <section className="im-editorial-gallery collage-host" aria-labelledby="im-gallery-title">
+      <CollageArt variant="bloom" />
       <div className="im-editorial-heading"><h2 id="im-gallery-title">{english ? 'Beauty, from every angle.' : 'Đẹp trong từng góc nhìn.'}</h2><p>{english ? 'A closer look at skin, brows and the details that make a face your own.' : 'Nhìn gần hơn vào làn da, dáng mày và những chi tiết làm nên nét riêng của gương mặt.'}</p></div>
       <div className="im-editorial-sheet">{photographs.map((photo, index) => <figure className={`im-editorial-photo im-editorial-photo--${index + 1}`} key={photo.image}><img src={`/images/${photo.image}.webp`} alt={english ? photo.en : photo.vi} width="800" height="1000" loading="lazy" /><figcaption>{english ? photo.en : photo.vi}</figcaption></figure>)}</div>
       <div className="im-editorial-gallery-bottom"><span>{english ? 'AZ FACE — Illustrative imagery' : 'AZ FACE — Hình ảnh minh họa'}</span><Link href="/bo-suu-tap" className="im-editorial-link">{english ? 'Explore the collection' : 'Khám phá bộ sưu tập'}<ArrowIcon /></Link></div>
     </section>
-    <section className="im-editorial-journal" aria-labelledby="im-journal-title">
+    <section className="im-editorial-journal collage-host" aria-labelledby="im-journal-title">
+      <CollageArt variant="atelier" />
       <header><h2 id="im-journal-title">{english ? 'Understand your options.' : 'Hiểu trước khi chọn.'}</h2><Link className="im-editorial-link" href="/kien-thuc">{english ? 'All articles' : 'Tất cả bài viết'}<ArrowIcon /></Link></header>
       {posts.length ? <div className="im-editorial-stories">{posts.slice(0, 3).map(post => <article key={post.slug}><Link href={`/kien-thuc/${post.slug}`} className="im-editorial-story"><div className="im-editorial-thumb"><img src={post.image} alt="" width="360" height="240" loading="lazy" /></div><div className="im-editorial-story-copy"><div className="im-editorial-meta"><span>{post.category}</span><span>{post.readTime}</span></div><h3>{post.title}</h3><p>{post.excerpt}</p></div><span className="im-editorial-read"><span>{english ? 'Read article' : 'Đọc bài viết'}</span><ArrowIcon /></span></Link></article>)}</div> : <p>{english ? 'New articles are being prepared. Explore our services while you wait.' : 'Bài viết mới đang được chuẩn bị. Bạn có thể tìm hiểu dịch vụ trong lúc này.'}</p>}
     </section>

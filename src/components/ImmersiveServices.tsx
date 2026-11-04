@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl'
 import Link from '@/i18n/Link'
 import type { Service } from '@/content/site'
 import { ArrowIcon } from './Icons'
+import { CollageArt } from './CollageArt'
 import './immersive-services.css'
 
 const chapters = [
@@ -35,11 +36,14 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
       media.add({ desktop: '(min-width: 901px)', mobile: '(max-width: 900px)', motion: '(prefers-reduced-motion: no-preference)' }, match => {
         if (!match.conditions?.motion) return
         const context = gsap.context(() => {
-          const scene = gsap.timeline({ scrollTrigger: { id: 'az-service-panorama', trigger: root.current!.querySelector('.immersive-services__navigation'), start: 'top 96%', end: 'top 30%', scrub: .55 } })
+          const scene = gsap.timeline({ scrollTrigger: { id: 'az-service-cabinet', trigger: root.current!.querySelector('.immersive-services__navigation'), start: 'top 88%', end: 'bottom 45%', scrub: .65 } })
           tabs.current.forEach((tab, index) => {
             if (!tab) return
-            scene.fromTo(tab, { yPercent: index === 1 ? 25 : 12, rotationX: match.conditions?.desktop ? -32 : -15, rotationZ: index === 1 ? 0 : (index === 0 ? -7 : 7), scale: .88 }, { yPercent: 0, rotationX: 0, rotationZ: 0, scale: 1, duration: 1, ease: 'power2.out' }, index * .09)
+            const desktop = Boolean(match.conditions?.desktop)
+            scene.fromTo(tab, { xPercent: desktop ? [30, 0, -30][index] : 0, yPercent: index === 1 ? 28 : -8, rotationY: desktop ? [38, 0, -38][index] : 0, rotationZ: [-9, 5, 9][index], scale: desktop ? .72 : .88 }, { xPercent: 0, yPercent: 0, rotationY: 0, rotationZ: 0, scale: 1, duration: 1.2, ease: 'power2.inOut' }, index * .12)
+              .fromTo(tab.querySelector('img'), { scale: 1.45, yPercent: -12 }, { scale: 1, yPercent: 0, duration: 1.4, ease: 'none' }, index * .12)
           })
+          scene.fromTo('.immersive-services__cabinet-line', { scaleX: .12 }, { scaleX: 1, duration: 1.6, ease: 'power2.inOut' }, 0)
         }, root)
         return () => context.revert()
       })
@@ -61,12 +65,14 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
     tabs.current[next]?.focus()
   }
 
-  return <section className="immersive-services" id="dich-vu" ref={root} data-ready={ready} aria-labelledby="immersive-services-title">
+  return <section className="immersive-services collage-host" id="dich-vu" ref={root} data-ready={ready} aria-labelledby="immersive-services-title">
+    <CollageArt variant="glass" />
     <header className="immersive-services__heading">
       <h2 id="immersive-services-title">{en ? 'What would you like to explore?' : 'Bạn muốn chăm chút điều gì?'}</h2>
       <p>{en ? 'Choose a focus. See the details. Take the time you need.' : 'Chọn điều bạn quan tâm, nhìn kỹ hơn và tìm hiểu theo nhịp của bạn.'}</p>
     </header>
-    {ready && available.length > 0 && <div className="immersive-services__navigation" role="tablist" style={{ gridTemplateColumns: available.map((_, index) => index === active ? '1.65fr' : '1fr').join(' ') }} aria-label={en ? 'Service focus' : 'Nhóm dịch vụ'}>
+    <div className="immersive-services__cabinet-line" aria-hidden="true" />
+    {ready && available.length > 0 && <div className="immersive-services__navigation" role="tablist" style={{ gridTemplateColumns: available.map((_, index) => index === active ? '1.45fr' : '1fr').join(' ') }} aria-label={en ? 'Service focus' : 'Nhóm dịch vụ'}>
       {available.map((chapter, index) => <button key={chapter.slug} ref={element => { tabs.current[index] = element }} type="button" role="tab" id={`service-tab-${chapter.slug}`} aria-controls={`home-service-${chapter.slug}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} onClick={() => setCurrent(index)} onKeyDown={event => selectWithKeyboard(event, index)}><img src={`/images/${chapter.image}.webp`} width="1024" height="1280" loading="lazy" alt="" /><span className="immersive-services__tab-label">{en ? chapter.labelEn : chapter.labelVi}<ArrowIcon /></span><span className="immersive-services__tab-action" aria-hidden="true">{active === index ? (en ? 'Selected' : 'Đang xem') : (en ? 'Explore' : 'Khám phá')}</span></button>)}
     </div>}
     {ready && available.length > 0 && <p className="immersive-services__image-note">{en ? 'Illustrative imagery' : 'Hình ảnh minh họa'}</p>}
@@ -74,8 +80,7 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
       {available.map((chapter, index) => <article key={chapter.slug} className="immersive-services__chapter" id={`home-service-${chapter.slug}`} role={ready ? 'tabpanel' : undefined} aria-labelledby={ready ? `service-tab-${chapter.slug}` : undefined} aria-hidden={ready && active !== index} inert={ready && active !== index} data-active={!ready || active === index}>
         <div className="immersive-services__copy"><h3>{en ? chapter.en : chapter.vi}</h3><p>{chapter.service.summary}</p><Link href={`/dich-vu/${chapter.slug}`} className="immersive-services__link"><span>{en ? 'Explore this service' : 'Tìm hiểu dịch vụ'}</span><ArrowIcon /></Link></div>
         <div className="immersive-services__composition">
-          <figure className="immersive-services__picture"><img src={`/images/${chapter.image}.webp`} alt={en ? `Illustrative image: ${chapter.labelEn.toLowerCase()}` : `Hình ảnh minh họa: ${chapter.labelVi.toLowerCase()}`} width="1024" height="1280" loading="lazy" /></figure>
-          <figure className="immersive-services__detail" aria-hidden="true"><img src={`/images/${chapter.detail}.webp`} alt="" width="800" height="1000" loading="lazy" /></figure>
+          <figure className="immersive-services__picture"><img src={`/images/${ready ? chapter.detail : chapter.image}.webp`} alt={en ? `Illustrative detail: ${chapter.labelEn.toLowerCase()}` : `Chi tiết minh họa: ${chapter.labelVi.toLowerCase()}`} width="1024" height="1280" loading="lazy" /></figure>
           <span className="immersive-services__caption">{en ? 'Illustrative imagery' : 'Hình ảnh minh họa'}</span>
         </div>
       </article>)}

@@ -1,0 +1,24 @@
+.collage-host{position:relative;isolation:isolate}
+.collage-art{position:absolute;inset:0;z-index:-1;overflow:clip;pointer-events:none;user-select:none;contain:paint}
+.collage-art__material{position:absolute;width:110%;height:110%;left:-5%;top:-5%;opacity:.65;transform:rotate(-3deg)}
+.collage-art__object{position:absolute;display:block;width:clamp(160px,29vw,500px);aspect-ratio:1;transform-origin:center}
+.collage-art__object img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(12px 28px 25px #073d4624)}
+.collage-art__object--1{left:-5%;top:8%;width:clamp(200px,34vw,580px)}
+.collage-art__object--2{right:-6%;top:22%;width:clamp(200px,38vw,660px)}
+.collage-art__object--3{right:22%;bottom:-8%;width:clamp(100px,17vw,290px)}
+.collage-art__foil{position:absolute;left:12%;right:4%;top:7%;bottom:7%;border:1px solid #b99a6480;border-radius:47% 8% 42% 12%;transform:rotate(12deg)}
+.collage-art--glass .collage-art__object--1{left:auto;right:-2%;top:0;width:clamp(240px,42vw,700px)}
+.collage-art--glass .collage-art__object--2{right:auto;left:-9%;top:35%;width:clamp(160px,24vw,430px)}
+.collage-art--glass .collage-art__material{opacity:.8;transform:rotate(8deg)}
+.collage-art--silk .collage-art__material{opacity:.28}
+.collage-art--silk .collage-art__object--1{width:clamp(380px,70vw,1100px);left:-18%;top:8%;}
+.collage-art--silk .collage-art__object--2{right:-4%;top:42%;width:clamp(180px,30vw,500px)}
+.collage-art--silk .collage-art__object--3{right:27%;bottom:3%}
+.collage-art--atelier .collage-art__object--1{left:auto;right:-8%;top:38%;width:clamp(250px,42vw,680px)}
+.collage-art--atelier .collage-art__object--2{right:auto;left:-9%;top:-6%;width:clamp(270px,48vw,770px)}
+.collage-art--atelier .collage-art__object--3{right:0;bottom:14%;width:clamp(160px,23vw,370px)}
+.collage-art--ribbon .collage-art__object--1{left:-8%;top:12%;width:clamp(280px,48vw,760px)}
+.collage-art--ribbon .collage-art__object--2{width:clamp(340px,64vw,1000px);right:-18%;top:24%}
+.collage-art--ribbon .collage-art__material{opacity:.26}
+@media(max-width:700px){.collage-art__object{opacity:.85}.collage-art__material{opacity:.35}.collage-art__object--1{left:-30%;top:10%}.collage-art__object--2{right:-35%;top:45%}.collage-art__object--3{right:-10%;bottom:2%}.collage-art--glass .collage-art__object--1{right:-35%;top:8%}.collage-art--silk .collage-art__object--1{left:-65%;top:10%}.collage-art--atelier .collage-art__object--1{right:-40%}.collage-art--ribbon .collage-art__object--2{right:-70%}.collage-art__foil{left:-15%;right:-15%}}
+@media(prefers-reduced-motion:reduce){.collage-art__object,.collage-art__object img{transform:none!important}}

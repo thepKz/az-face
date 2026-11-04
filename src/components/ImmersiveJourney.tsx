@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { useLocale } from 'next-intl'
 import Link from '@/i18n/Link'
 import { ArrowIcon } from './Icons'
+import { CollageArt } from './CollageArt'
 import './immersive-journey.css'
 
 const chapters = [
@@ -60,6 +61,12 @@ const chapters = [
 export function ImmersiveJourney() {
   const locale = useLocale() === 'en' ? 'en' : 'vi'
   const root = useRef<HTMLElement>(null)
+  const clipId = useId().replace(/:/g, '')
+  const windows = [
+    'M150 18 C230 0 480 0 550 90 C598 150 594 490 560 600 C520 700 350 718 180 700 C40 686 8 590 12 390 C14 210 38 42 150 18 Z',
+    'M18 100 C90 18 220 28 300 50 C390 76 510 0 580 70 L580 620 C480 700 350 660 280 680 C180 710 80 680 18 620 Z',
+    'M300 10 C450 10 590 110 590 300 L590 690 L10 690 L10 300 C10 110 150 10 300 10 Z',
+  ]
 
   useEffect(() => {
     const section = root.current
@@ -67,9 +74,9 @@ export function ImmersiveJourney() {
     let cancelled = false
     let dispose = () => {}
 
-    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger'), import('gsap/MorphSVGPlugin')]).then(([{ gsap }, { ScrollTrigger }, { MorphSVGPlugin }]) => {
       if (cancelled) return
-      gsap.registerPlugin(ScrollTrigger)
+      gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin)
       const media = gsap.matchMedia()
       media.add({
         desktop: '(min-width: 901px)',
@@ -83,25 +90,33 @@ export function ImmersiveJourney() {
             const picture = chapter.querySelector('[data-journey-window]')
             const image = chapter.querySelector('[data-journey-image]')
             const detail = chapter.querySelector('[data-journey-detail]')
-            const amount = desktop ? 1 : .55
-            // Each folio has its own arrival: hinge, panorama, then a portrait rising from depth.
+            const amount = desktop ? 1 : .5
+            const mask = chapter.querySelector('[data-journey-mask]')
+            const compressed = [
+              'M268 50 C300 20 342 20 360 90 C390 150 390 490 360 600 C340 680 300 700 270 680 C230 650 210 590 215 390 C220 210 230 82 268 50 Z',
+              'M18 285 C90 250 220 280 300 280 C390 280 510 250 580 285 L580 445 C480 470 350 450 280 470 C180 490 80 470 18 445 Z',
+              'M300 190 C390 190 470 270 470 390 L470 590 L130 590 L130 390 C130 270 210 190 300 190 Z',
+            ]
             const openings = [
-              { rotationY: -52 * amount, rotationX: 8 * amount, rotation: -8 * amount, scale: desktop ? .72 : .84, xPercent: -12 * amount, yPercent: 8 * amount, clipPath: 'inset(0% 0% 0% 0%)' },
-              { rotationY: 30 * amount, rotationX: 0, rotation: 5 * amount, scale: desktop ? .84 : .91, xPercent: 18 * amount, yPercent: 0, clipPath: `inset(0% ${desktop ? 26 : 14}% 0% ${desktop ? 26 : 14}%)` },
-              { rotationY: 0, rotationX: 42 * amount, rotation: 8 * amount, scale: desktop ? .68 : .83, xPercent: 0, yPercent: 20 * amount, clipPath: 'inset(0% 0% 0% 0%)' },
+              { rotationY: -38 * amount, rotationX: 0, rotation: -12 * amount, scale: .86, xPercent: -14 * amount, yPercent: 5 * amount },
+              { rotationY: 20 * amount, rotationX: 0, rotation: 7 * amount, scale: .9, xPercent: 15 * amount, yPercent: 0 },
+              { rotationY: 0, rotationX: 32 * amount, rotation: 10 * amount, scale: .78, xPercent: 0, yPercent: 16 * amount },
             ]
             const scene = gsap.timeline({
               defaults: { ease: 'power2.out', duration: 1 },
               scrollTrigger: {
-                id: `journey-folio-${index + 1}`,
-                trigger: chapter.querySelector('.journey-cinema__composition'),
-                start: 'top 94%', end: 'center 42%', scrub: desktop ? .7 : .4,
+                id: `az-journey-morph-${index + 1}`,
+                trigger: chapter,
+                start: 'top 82%', end: 'center 28%', scrub: desktop ? .8 : .45,
                 invalidateOnRefresh: true,
               },
             })
             scene.fromTo(picture, openings[index],
-              { rotationY: 0, rotationX: 0, rotation: 0, scale: 1, xPercent: 0, yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)' }, 0)
-              .fromTo(image, { scale: desktop ? 1.38 : 1.2, yPercent: -5 }, { scale: 1.06, yPercent: 0 }, 0)
+              { rotationY: 0, rotationX: 0, rotation: index === 1 ? 3 : -3, scale: 1, xPercent: 0, yPercent: 0 }, 0)
+              .fromTo(image, { scale: desktop ? 1.2 : 1.1, transformOrigin: '50% 50%' }, { scale: 1, duration: 1.35 }, 0)
+            if (mask) scene.fromTo(mask, { attr: { d: compressed[index] } }, { morphSVG: windows[index], duration: 1.35, ease: 'power2.inOut' }, 0)
+            // Keep the title's travel inside the smallest responsive chapter gutter.
+            scene.fromTo(chapter.querySelector('h2'), { x: () => (index === 1 ? 1 : -1) * Math.min(32, window.innerWidth * .025) }, { x: 0, duration: 1.5, ease: 'none' }, 0)
             if (detail) scene.fromTo(detail,
               { yPercent: 35 * amount, xPercent: (index === 1 ? 70 : -65) * amount, rotationY: (index === 1 ? -48 : 48) * amount, rotation: (index === 1 ? -12 : 12) * amount, scale: .75, opacity: .35 },
               { yPercent: 0, xPercent: 0, rotationY: 0, rotation: index === 1 ? -7 : 7, scale: 1, opacity: 1, duration: .85 }, .15)
@@ -117,13 +132,13 @@ export function ImmersiveJourney() {
   }, [])
 
   return <section className="journey-cinema" id="trai-nghiem" ref={root} aria-label={locale === 'en' ? 'From your goals to your decision' : 'Từ mong muốn đến lựa chọn của bạn'}>
-    <div className="journey-cinema__atmosphere" aria-hidden="true" />
     {chapters.map((chapter, index) => {
       const copy = chapter[locale]
-      return <article className={`journey-cinema__chapter journey-cinema__chapter--${index + 1}`} id={`journey-${chapter.id}`} key={chapter.id} data-journey-chapter>
+      return <article className={`journey-cinema__chapter journey-cinema__chapter--${index + 1} collage-host`} id={`journey-${chapter.id}`} key={chapter.id} data-journey-chapter>
+        <CollageArt variant={index === 0 ? 'bloom' : index === 1 ? 'atelier' : 'ribbon'} />
         <h2>{copy.verb}</h2>
         <div className="journey-cinema__composition">
-          <figure className="journey-cinema__picture" data-journey-window><img src={chapter.image} alt={copy.alt} width="1024" height="1280" loading="lazy" data-journey-image /></figure>
+          <figure className="journey-cinema__picture" data-journey-window><svg viewBox="0 0 600 720" role="img" aria-label={copy.alt}><defs><clipPath id={`${clipId}-${index}`}><path data-journey-mask d={windows[index]} /></clipPath></defs><g clipPath={`url(#${clipId}-${index})`}><image href={chapter.image} width="600" height="720" preserveAspectRatio="xMidYMid slice" data-journey-image /></g></svg></figure>
           <figure className="journey-cinema__detail" data-journey-detail aria-hidden="true"><img src={['/images/journey-experience-arrival.webp', '/images/journey-service-skin-detail.webp', '/images/journey-about-detail.webp'][index]} alt="" width="768" height="1024" loading="lazy" /></figure>
         </div>
         <div className="journey-cinema__copy">

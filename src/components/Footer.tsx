@@ -1,6 +1,7 @@
 import Link from '@/i18n/Link'
 import { getTranslations } from 'next-intl/server'
 import { ArrowIcon } from './Icons'
+import { CollageArt } from './CollageArt'
 import { FooterMotion } from './FooterMotion'
 import './footer.css'
 
@@ -8,7 +9,7 @@ export async function Footer() {
   const [t, f] = await Promise.all([getTranslations('common'), getTranslations('footer')])
   return <footer className="az-footer-climax" id="az-footer-climax">
     <FooterMotion />
-    <div className="az-footer-invitation">
+    <div className="az-footer-invitation collage-host"><CollageArt variant="bloom" />
       <Link className="az-footer-logo" href="/" aria-label={t('homeLabel')}><img src="/brand/logo.svg" alt="" width="80" height="80" /></Link>
       <div><h2><Link href="/lien-he">{f('invitation')}<span className="az-footer-cta-icon"><ArrowIcon /></span></Link></h2><p className="az-footer-promise">{f('promise')}</p></div>
     </div>

@@ -4,6 +4,7 @@ import { useEffect, useId, useRef } from 'react'
 import { useLocale } from 'next-intl'
 import Link from '@/i18n/Link'
 import { ArrowIcon } from './Icons'
+import { CollageArt } from './CollageArt'
 import './immersive-hero.css'
 
 const aperture = {
@@ -66,7 +67,8 @@ export function ImmersiveHero() {
   }, [])
 
   return <section className="cinema-hero" ref={root} aria-label={en ? 'The AZ FACE perspective' : 'Góc nhìn AZ FACE'}>
-    <div className="cinema-hero__cover">
+    <div className="cinema-hero__cover collage-host">
+      <CollageArt variant="bloom" className="cinema-hero__collage" />
       <h1 className="cinema-hero__title">{en ? 'Distinctly you.' : 'Tôn nét riêng.'}</h1>
       <div className="cinema-hero__shutter">
         <span className="cinema-hero__orbit" aria-hidden="true" />
@@ -88,7 +90,8 @@ export function ImmersiveHero() {
         <a className="cinema-hero__scroll" href="#goc-nhin" aria-label={en ? 'Scroll to explore' : 'Cuộn để khám phá'}><ArrowIcon /></a>
       </div>
     </div>
-    <div className="cinema-hero__outro" id="goc-nhin">
+    <div className="cinema-hero__outro collage-host" id="goc-nhin">
+      <CollageArt variant="silk" />
       <div className="cinema-hero__outro-copy"><h2>{en ? 'Keep what makes you, you.' : 'Giữ điều làm nên bạn.'}</h2><p>{en ? 'A face is more than a set of features. It carries your expressions, your habits and your story. Aesthetic care starts by understanding what you want to change, and what you want to keep.' : 'Một gương mặt không chỉ là những đường nét. Đó còn là biểu cảm, thói quen và câu chuyện của bạn. Chăm chút diện mạo bắt đầu bằng việc hiểu điều muốn thay đổi và điều muốn giữ lại.'}</p><div className="cinema-hero__actions"><Link href="/gioi-thieu" className="cinema-text-link">{en ? 'Discover our perspective' : 'Tìm hiểu tinh thần AZ FACE'} <ArrowIcon /></Link></div></div>
       <figure className="cinema-hero__portrait"><div className="cinema-hero__portrait-inner"><img src="/images/brand-personal-kbeauty.webp" width="1200" height="1500" loading="lazy" alt={en ? 'Illustrative beauty portrait with a short bob and champagne earrings' : 'Chân dung beauty minh họa với tóc bob và khuyên tai champagne'} /></div><div className="cinema-hero__detail" aria-hidden="true"><img src="/images/campaign-botanical.webp" width="1024" height="1280" loading="lazy" alt="" /></div></figure>
     </div>

@@ -59,3 +59,17 @@
  .cinema-hero__outro h2{font-size:clamp(36px,10vw,48px);max-width:14ch}.cinema-hero__outro p{font-size:16px;margin-top:23px}
 }
 @media(prefers-reduced-motion:reduce){.cinema-hero *, .cinema-hero *:before{animation:none!important;transition:none!important}}
+
+/* Keep decorative objects at the scene edges so the title and portraits stay clear. */
+.cinema-hero__cover{background-image:url('/images/elements/pearl-paper.webp');background-size:cover}
+.cinema-hero__cover>.collage-art .collage-art__material{opacity:.28}
+.cinema-hero__cover>.collage-art .collage-art__object--1{left:-10%;top:25%;width:25%}
+.cinema-hero__cover>.collage-art .collage-art__object--2{right:-10%;top:16%;width:30%}
+.cinema-hero__cover>.collage-art .collage-art__object--3{right:23%;bottom:-12%;width:20%}
+.cinema-hero__outro>.collage-art .collage-art__material{opacity:.12}
+.cinema-hero__outro>.collage-art .collage-art__object--1{left:-32%;top:32%;width:64%;opacity:.25}
+.cinema-hero__outro>.collage-art .collage-art__object--2{right:-10%;top:5%;width:35%}
+.cinema-hero__outro>.collage-art .collage-art__object--3{right:41%;bottom:10%;width:16%}
+.cinema-hero__portrait-inner{box-shadow:18px 26px 46px #073d4626}
+.cinema-hero__detail{box-shadow:8px 15px 24px #073d4626}
+@media(max-width:600px){.cinema-hero__cover>.collage-art .collage-art__object--1{width:55%;left:-32%;top:24%}.cinema-hero__cover>.collage-art .collage-art__object--2{width:60%;right:-40%;top:32%}.cinema-hero__outro>.collage-art .collage-art__object--1{opacity:.12}.cinema-hero__outro>.collage-art .collage-art__object--2{width:65%;right:-36%;top:42%}}

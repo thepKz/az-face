@@ -36,3 +36,29 @@
   .experience-compass > a::before { transition:none; }
   .experience-page .experience-opening > figure { clip-path:none; }
 }
+
+/* The visit moves through a portrait, a tactile still life, then a floral closing scene. */
+.experience-page .experience-opening.collage-host{min-height:760px;background:var(--az-petroleum);overflow:clip}
+.experience-page .experience-opening.collage-host>figure{inset:8% 7% 10% auto;width:46%;border-radius:40% 40% 4% 4%;z-index:1;box-shadow:18px 28px 40px #001d2638}
+.experience-page .experience-opening.collage-host:after{display:none}
+.experience-page .experience-opening__copy{width:100%;padding-block:100px;pointer-events:none}
+.experience-page .experience-opening__copy a{pointer-events:auto}
+.experience-page .experience-opening__copy h1{max-width:8ch;font-size:clamp(60px,7vw,100px)}
+.experience-page .experience-opening__copy p{max-width:31ch}
+.experience-opening .collage-art__object--1{left:-10%;top:32%;width:34vw}.experience-opening .collage-art__object--2{right:-10%;top:-12%;width:45vw}.experience-opening .collage-art__material{opacity:.2}
+.experience-page .experience-chapter.collage-host{max-width:none;width:100%;padding:110px var(--gutter);background:var(--az-mist);gap:10%}
+.experience-page .experience-chapter h2,.experience-page .experience-close h2{font-size:clamp(38px,4.6vw,68px);line-height:1.18}
+.experience-chapter .collage-art__object--1{right:-13%;top:-8%;width:45vw}.experience-chapter .collage-art__object--2{left:-16%;top:48%}.experience-chapter__copy{position:relative;z-index:2}
+.experience-page .experience-chapter__image{width:90%;justify-self:center;box-shadow:16px 24px 35px #073d4626}
+.experience-page .experience-ritual.collage-host{background:var(--az-petroleum);color:var(--az-pearl);margin:0;padding:95px 0 100px}
+.experience-page .experience-ritual h2{font-size:clamp(40px,5.5vw,80px);line-height:1.16}
+.experience-page .experience-ritual .journey-label,.experience-page .experience-ritual .text-link{color:var(--az-foam)}
+.experience-page .experience-ritual>figure{width:72%;border:12px solid #edf7f5;box-shadow:18px 25px 38px #001d2633}
+.experience-ritual .collage-art__object--1{left:-20%;top:25%}.experience-ritual .collage-art__object--2{right:-12%;top:50%}
+.experience-page .experience-close.collage-host{max-width:none;width:100%;padding:100px var(--gutter);background:var(--az-pearl)}
+.experience-close .collage-art__object--1{right:-12%;top:35%}.experience-close .collage-art__object--2{left:-18%;top:0}.experience-close .collage-art__object--3{right:-5%;bottom:0}
+.experience-opening>.collage-art,.experience-chapter>.collage-art{mask-image:linear-gradient(90deg,transparent 32%,#000 58%)}
+.experience-close>.collage-art{mask-image:linear-gradient(90deg,#000 25%,transparent 48%)}
+.experience-ritual>.collage-art{mask-image:linear-gradient(transparent 12%,#000 35%,#000 78%,transparent 95%)}
+@media(max-width:760px){.experience-opening>.collage-art{mask-image:linear-gradient(transparent 30%,#000 52%)}.experience-chapter>.collage-art{mask-image:linear-gradient(transparent 25%,#000 55%)}.experience-close>.collage-art{mask-image:linear-gradient(#000 15%,transparent 48%)}}
+@media(max-width:760px){.experience-page .experience-opening.collage-host{min-height:920px;align-items:flex-start}.experience-page .experience-opening.collage-host>figure{inset:40% 12% 6%;width:76%;border-radius:40% 40% 4% 4%}.experience-page .experience-opening__copy{padding-block:45px;pointer-events:auto}.experience-page .experience-opening__copy h1{font-size:58px;max-width:12ch}.experience-page .experience-opening__copy p{max-width:34ch}.experience-page .experience-chapter.collage-host,.experience-page .experience-close.collage-host{padding-block:70px;gap:40px}.experience-page .experience-ritual>figure{width:88%;border-width:7px}.experience-page .experience-ritual.collage-host{padding-block:65px}.experience-page .experience-opening__index{display:none}}

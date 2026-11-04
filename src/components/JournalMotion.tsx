@@ -17,8 +17,12 @@ export function JournalMotion({ children, className = '' }: { children: ReactNod
           const scope = root.current!
           const arrival = scope.querySelector('[data-journal-arrival]')
           if (arrival) gsap.fromTo(arrival, { y: 18, opacity: .75 }, { y: 0, opacity: 1, duration: .8, ease: 'power3.out', clearProps: 'transform,opacity' })
-          scope.querySelectorAll<HTMLElement>('[data-journal-reveal]').forEach(frame => {
-            gsap.fromTo(frame, { clipPath: 'inset(0% 0% 8% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power3.out', clearProps: 'clipPath', scrollTrigger: { trigger: frame, start: 'top 90%', once: true } })
+          scope.querySelectorAll<HTMLElement>('[data-journal-reveal]').forEach((frame, index) => {
+            const wide = Boolean(conditions.desktop)
+            gsap.fromTo(frame, { clipPath: `inset(${wide ? 15 : 7}% ${wide ? 18 : 6}% 8% 2% round 38%)`, rotation: wide ? (index % 2 ? 7 : -7) : 0 }, { clipPath: 'inset(0% 0% 0% 0% round 2%)', rotation: 0, ease: 'power2.inOut', scrollTrigger: { id: `editorial-window-${index}`, trigger: frame, start: 'top 96%', end: 'center 45%', scrub: .65 } })
+          })
+          scope.querySelectorAll<HTMLElement>('.ej-story').forEach((story, index) => {
+            gsap.fromTo(story, { rotation: index % 2 ? 6 : -6, y: 60, transformOrigin: '50% 100%' }, { rotation: 0, y: 0, ease: 'power2.out', scrollTrigger: { id: `journal-sheet-${index}`, trigger: story, start: 'top 98%', end: 'top 35%', scrub: .55 } })
           })
           if (conditions.desktop) scope.querySelectorAll<HTMLElement>('[data-journal-parallax] img').forEach(image => {
             gsap.fromTo(image, { yPercent: -4 }, { yPercent: 4, ease: 'none', scrollTrigger: { trigger: image.parentElement, start: 'top bottom', end: 'bottom top', scrub: .7 } })
