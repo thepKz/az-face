@@ -8,23 +8,23 @@ import './immersive-journey.css'
 
 const chapters = [
   {
-    id: 'lang-nghe', image: '/images/journey-experience-rest.webp',
+    id: 'lang-nghe', image: '/images/brand-listening-scene.webp',
     vi: {
       verb: 'Lắng nghe.', title: 'Bắt đầu bằng điều bạn muốn.',
       body: 'Một vùng da bạn muốn chăm sóc kỹ hơn. Một dáng mày bạn đang cân nhắc. Hay chỉ là mong muốn hiểu gương mặt mình hơn. Hãy bắt đầu từ điều ấy.',
       questions: ['Điều bạn muốn cải thiện', 'Nét riêng bạn muốn giữ', 'Những điều bạn còn băn khoăn'],
-      action: 'Ghi lại mong muốn', alt: 'Hình ảnh minh họa một khoảnh khắc nghỉ ngơi và chăm sóc bản thân',
+      action: 'Ghi lại mong muốn', alt: 'Hình ảnh minh họa hai người phụ nữ trao đổi mong muốn chăm sóc khuôn mặt',
     },
     en: {
       verb: 'Listen.', title: 'Start with what matters to you.',
       body: 'An area of skin you would like to care for. A brow shape you are considering. Or simply a wish to understand your own features better. Start there.',
       questions: ['What you would like to refine', 'The features you want to keep', 'The questions on your mind'],
-      action: 'Put your goals into words', alt: 'Illustrative image of a quiet moment of rest and personal care',
+      action: 'Put your goals into words', alt: 'Illustrative scene of two women discussing facial care preferences',
     },
     href: '/lien-he',
   },
   {
-    id: 'hieu-ro', image: '/images/journey-service-tools.webp',
+    id: 'hieu-ro', image: '/images/brand-care-stilllife.webp',
     vi: {
       verb: 'Hiểu rõ.', title: 'Hỏi đến khi mọi thứ rõ ràng.',
       body: 'Tên gọi của một dịch vụ chưa nói lên tất cả. Tìm hiểu các bước, phạm vi thực hiện và những điều cần cân nhắc để biết lựa chọn đó có phù hợp với mình hay không.',
@@ -40,7 +40,7 @@ const chapters = [
     href: '/dich-vu',
   },
   {
-    id: 'lua-chon', image: '/images/journey-about-portrait.webp',
+    id: 'lua-chon', image: '/images/brand-choice-kbeauty.webp',
     vi: {
       verb: 'Lựa chọn.', title: 'Quyết định theo nhịp của bạn.',
       body: 'Bạn có thể tìm hiểu thêm, hỏi lại hoặc dành thời gian cân nhắc. Một cuộc trao đổi có ý nghĩa giúp bạn hiểu lựa chọn của mình trước khi quyết định.',

@@ -7,6 +7,7 @@ import { ImmersiveHero } from '@/components/ImmersiveHero'
 import { ImmersiveServices } from '@/components/ImmersiveServices'
 import { ImmersiveJourney } from '@/components/ImmersiveJourney'
 import { ImmersiveEditorial } from '@/components/ImmersiveEditorial'
+import { BrandAtmosphere } from '@/components/BrandAtmosphere'
 import { ArrowIcon } from '@/components/Icons'
 import { FAQ } from '@/components/FAQ'
 import './home-story.css'
@@ -17,6 +18,7 @@ export default async function HomePage() {
   const en = (await getLocale()) === 'en'
   const [posts, services] = await Promise.all([getPublishedPosts(), getServices()])
   return <div className="cinema-home">
+    <BrandAtmosphere />
     <ImmersiveHero />
     <ImmersiveServices services={services} />
     <ImmersiveJourney />

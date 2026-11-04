@@ -8,9 +8,9 @@ import { ArrowIcon } from './Icons'
 import './immersive-services.css'
 
 const chapters = [
-  { slug: 'cham-soc-da-mat', image: 'campaign-gallery-skin-main', detail: 'edition-collection-skin', vi: 'Làn da.', en: 'Your skin.', labelVi: 'Làn da', labelEn: 'Skin' },
-  { slug: 'cham-soc-da-chuyen-sau', image: 'campaign-gallery-ritual-main', detail: 'edition-menu-stilllife', vi: 'Chuyên sâu.', en: 'A closer look.', labelVi: 'Chuyên sâu', labelEn: 'In depth' },
-  { slug: 'dang-may-va-sac-moi', image: 'campaign-gallery-brows-main', detail: 'edition-collection-brow-detail', vi: 'Mày & môi.', en: 'Brows & lips.', labelVi: 'Mày & môi', labelEn: 'Brows & lips' },
+  { slug: 'cham-soc-da-mat', image: 'campaign-service-skin', detail: 'campaign-gallery-skin-detail', vi: 'Làn da.', en: 'Your skin.', labelVi: 'Làn da', labelEn: 'Skin' },
+  { slug: 'cham-soc-da-chuyen-sau', image: 'campaign-service-care', detail: 'campaign-gallery-ritual-detail', vi: 'Chuyên sâu.', en: 'A closer look.', labelVi: 'Chuyên sâu', labelEn: 'In depth' },
+  { slug: 'dang-may-va-sac-moi', image: 'campaign-service-brows', detail: 'campaign-gallery-brows-detail', vi: 'Mày & môi.', en: 'Brows & lips.', labelVi: 'Mày & môi', labelEn: 'Brows & lips' },
 ]
 
 export function ImmersiveServices({ services }: { services: Service[] }) {
@@ -74,7 +74,7 @@ export function ImmersiveServices({ services }: { services: Service[] }) {
       {available.map((chapter, index) => <article key={chapter.slug} className="immersive-services__chapter" id={`home-service-${chapter.slug}`} role={ready ? 'tabpanel' : undefined} aria-labelledby={ready ? `service-tab-${chapter.slug}` : undefined} aria-hidden={ready && active !== index} inert={ready && active !== index} data-active={!ready || active === index}>
         <div className="immersive-services__copy"><h3>{en ? chapter.en : chapter.vi}</h3><p>{chapter.service.summary}</p><Link href={`/dich-vu/${chapter.slug}`} className="immersive-services__link"><span>{en ? 'Explore this service' : 'Tìm hiểu dịch vụ'}</span><ArrowIcon /></Link></div>
         <div className="immersive-services__composition">
-          <figure className="immersive-services__picture"><img src={`/images/${chapter.image}.webp`} alt={en ? `Illustrative portrait: ${chapter.labelEn.toLowerCase()}` : `Chân dung minh họa: ${chapter.labelVi.toLowerCase()}`} width="1024" height="1280" loading="lazy" /></figure>
+          <figure className="immersive-services__picture"><img src={`/images/${chapter.image}.webp`} alt={en ? `Illustrative image: ${chapter.labelEn.toLowerCase()}` : `Hình ảnh minh họa: ${chapter.labelVi.toLowerCase()}`} width="1024" height="1280" loading="lazy" /></figure>
           <figure className="immersive-services__detail" aria-hidden="true"><img src={`/images/${chapter.detail}.webp`} alt="" width="800" height="1000" loading="lazy" /></figure>
           <span className="immersive-services__caption">{en ? 'Illustrative imagery' : 'Hình ảnh minh họa'}</span>
         </div>

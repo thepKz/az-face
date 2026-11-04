@@ -72,15 +72,15 @@ export function ImmersiveHero() {
         <span className="cinema-hero__orbit" aria-hidden="true" />
         <div className="cinema-hero__ribbon cinema-hero__ribbon--skin" aria-hidden="true"><figure className="cinema-hero__ribbon-frame"><img src="/images/campaign-hero-detail.webp" alt="" width="1000" height="1000" /></figure></div>
         <div className="cinema-hero__portal">
-          <svg viewBox="0 0 1000 700" role="img" aria-label={en ? 'Illustrative portrait in natural light' : 'Chân dung minh họa trong ánh sáng tự nhiên'}>
+          <svg viewBox="0 0 1000 700" role="img" aria-label={en ? 'Illustrative Korean beauty editorial portrait in champagne light' : 'Chân dung minh họa phong cách beauty editorial Hàn Quốc trong ánh sáng champagne'}>
             <defs>
               <clipPath id={`${clipId}-intro`}><path className="cinema-hero__intro-path" d={aperture.open} /></clipPath>
               <clipPath id={`${clipId}-scroll`}><path className="cinema-hero__scroll-path" d={aperture.portrait} /></clipPath>
             </defs>
-            <g clipPath={`url(#${clipId}-scroll)`}><g clipPath={`url(#${clipId}-intro)`}><image href="/images/campaign-hero-main.webp" width="1000" height="700" preserveAspectRatio="xMaxYMid slice" /></g></g>
+            <g clipPath={`url(#${clipId}-scroll)`}><g clipPath={`url(#${clipId}-intro)`}><image href="/images/brand-hero-kbeauty.webp" width="1000" height="700" preserveAspectRatio="xMaxYMid slice" /></g></g>
           </svg>
         </div>
-        <div className="cinema-hero__ribbon cinema-hero__ribbon--brows" aria-hidden="true"><figure className="cinema-hero__ribbon-frame"><img src="/images/campaign-gallery-brows-main.webp" alt="" width="1024" height="1280" /></figure></div>
+        <div className="cinema-hero__ribbon cinema-hero__ribbon--brows" aria-hidden="true"><figure className="cinema-hero__ribbon-frame"><img src="/images/brand-brow-kbeauty.webp" alt="" width="1024" height="1280" /></figure></div>
       </div>
       <div className="cinema-hero__support">
         <p>{en ? 'Facial aesthetics, shaped around your skin, your features and what matters to you.' : 'Thẩm mỹ khuôn mặt, bắt đầu từ làn da, đường nét và điều bạn muốn chăm chút.'}</p>
@@ -90,7 +90,7 @@ export function ImmersiveHero() {
     </div>
     <div className="cinema-hero__outro" id="goc-nhin">
       <div className="cinema-hero__outro-copy"><h2>{en ? 'Keep what makes you, you.' : 'Giữ điều làm nên bạn.'}</h2><p>{en ? 'A face is more than a set of features. It carries your expressions, your habits and your story. Aesthetic care starts by understanding what you want to change, and what you want to keep.' : 'Một gương mặt không chỉ là những đường nét. Đó còn là biểu cảm, thói quen và câu chuyện của bạn. Chăm chút diện mạo bắt đầu bằng việc hiểu điều muốn thay đổi và điều muốn giữ lại.'}</p><div className="cinema-hero__actions"><Link href="/gioi-thieu" className="cinema-text-link">{en ? 'Discover our perspective' : 'Tìm hiểu tinh thần AZ FACE'} <ArrowIcon /></Link></div></div>
-      <figure className="cinema-hero__portrait"><div className="cinema-hero__portrait-inner"><img src="/images/campaign-hero-main.webp" width="1600" height="1067" loading="lazy" alt={en ? 'A closer look at the portrait, in natural light' : 'Một góc gần hơn của chân dung, trong ánh sáng tự nhiên'} /></div><div className="cinema-hero__detail" aria-hidden="true"><img src="/images/campaign-hero-detail.webp" width="1000" height="1000" loading="lazy" alt="" /></div></figure>
+      <figure className="cinema-hero__portrait"><div className="cinema-hero__portrait-inner"><img src="/images/brand-personal-kbeauty.webp" width="1200" height="1500" loading="lazy" alt={en ? 'Illustrative beauty portrait with a short bob and champagne earrings' : 'Chân dung beauty minh họa với tóc bob và khuyên tai champagne'} /></div><div className="cinema-hero__detail" aria-hidden="true"><img src="/images/campaign-botanical.webp" width="1024" height="1280" loading="lazy" alt="" /></div></figure>
     </div>
   </section>
 }
