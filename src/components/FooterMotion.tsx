@@ -17,7 +17,8 @@ export function FooterMotion() {
         if (!match.conditions?.motion) return
         const desktop = Boolean(match.conditions.desktop)
         const context = gsap.context(() => {
-          const finale = gsap.timeline({ scrollTrigger: { id: 'az-footer-portrait-finale', trigger: '.az-footer-finale', start: 'top 95%', end: 'center 35%', scrub: .8 } })
+          // Measure after upstream pins, even when their chunks initialize later.
+          const finale = gsap.timeline({ scrollTrigger: { id: 'az-footer-portrait-finale', trigger: '.az-footer-finale', start: 'top 95%', end: 'center 35%', scrub: .8, refreshPriority: -1 } })
           finale.fromTo('#footer-portrait-window path', { attr: { d: 'M40 290 C200 235 420 235 560 290 C575 320 575 380 560 410 C420 465 200 465 40 410 C25 380 25 320 40 290 Z' } }, { morphSVG: 'M80 40 C210 5 440 5 520 100 C585 180 585 500 520 610 C450 700 180 700 80 610 C5 530 5 180 80 40 Z', duration: 1, ease: 'power2.inOut' }, 0)
             .fromTo('.az-footer-portrait', { rotation: 18, scale: .78 }, { rotation: -7, scale: 1, duration: 1, ease: 'power2.out' }, 0)
             .fromTo('.az-footer-arc', { rotation: -95, scale: .7, xPercent: 22 }, { rotation: 25, scale: 1, xPercent: 0, duration: 1.2, ease: 'power2.inOut' }, 0)
