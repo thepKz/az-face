@@ -8,15 +8,22 @@ export function FooterMotion() {
   useEffect(() => {
     let cancelled = false
     let dispose = () => {}
-    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger'), import('gsap/MorphSVGPlugin')]).then(([{ gsap }, { ScrollTrigger }, { MorphSVGPlugin }]) => {
       const root = document.getElementById('az-footer-climax')
       if (cancelled || !root) return
-      gsap.registerPlugin(ScrollTrigger)
+      gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin)
       const media = gsap.matchMedia()
       media.add({ desktop: '(min-width: 801px)', mobile: '(max-width: 800px)', motion: '(prefers-reduced-motion: no-preference)' }, match => {
         if (!match.conditions?.motion) return
         const desktop = Boolean(match.conditions.desktop)
         const context = gsap.context(() => {
+          const finale = gsap.timeline({ scrollTrigger: { id: 'az-footer-portrait-finale', trigger: '.az-footer-finale', start: 'top 95%', end: 'center 35%', scrub: .8 } })
+          finale.fromTo('#footer-portrait-window path', { attr: { d: 'M40 290 C200 235 420 235 560 290 C575 320 575 380 560 410 C420 465 200 465 40 410 C25 380 25 320 40 290 Z' } }, { morphSVG: 'M80 40 C210 5 440 5 520 100 C585 180 585 500 520 610 C450 700 180 700 80 610 C5 530 5 180 80 40 Z', duration: 1, ease: 'power2.inOut' }, 0)
+            .fromTo('.az-footer-portrait', { rotation: 18, scale: .78 }, { rotation: -7, scale: 1, duration: 1, ease: 'power2.out' }, 0)
+            .fromTo('.az-footer-arc', { rotation: -95, scale: .7, xPercent: 22 }, { rotation: 25, scale: 1, xPercent: 0, duration: 1.2, ease: 'power2.inOut' }, 0)
+            .fromTo('.az-footer-orchid', { xPercent: 80, yPercent: 30, rotation: 45 }, { xPercent: 0, yPercent: 0, rotation: -12, duration: 1, ease: 'power2.out' }, .16)
+            .fromTo('.az-footer-pearls', { xPercent: -60, rotation: -50 }, { xPercent: 0, rotation: 12, duration: 1, ease: 'power2.out' }, .24)
+            .fromTo('.az-footer-orbit--outer', { rotation: -45, scale: .6 }, { rotation: 35, scale: 1, duration: 1.2, ease: 'none' }, 0)
           const curtain = gsap.timeline({ scrollTrigger: { id: 'az-footer-curtain', trigger: root.querySelector('.az-footer-curtain'), start: 'top 98%', end: 'bottom 30%', scrub: .7 } })
           curtain.fromTo('.az-footer-curtain path', {
             attr: { d: 'M0 240 C240 240 480 236 720 230 C960 236 1200 240 1440 240 L1440 240 L0 240 Z' },

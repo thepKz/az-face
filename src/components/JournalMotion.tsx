@@ -17,6 +17,12 @@ export function JournalMotion({ children, className = '' }: { children: ReactNod
           const scope = root.current!
           const arrival = scope.querySelector('[data-journal-arrival]')
           if (arrival) gsap.fromTo(arrival, { y: 18, opacity: .75 }, { y: 0, opacity: 1, duration: .8, ease: 'power3.out', clearProps: 'transform,opacity' })
+          const spread = scope.querySelector('.ej-featured')
+          if (spread) {
+            const book = gsap.timeline({ scrollTrigger: { id: 'journal-opening-spread', trigger: spread, start: 'top 92%', end: 'top 15%', scrub: .75 } })
+            book.fromTo('.ej-feature-story', { rotationY: conditions.desktop ? -48 : 0, x: conditions.desktop ? -70 : 0, transformOrigin: '0% 50%' }, { rotationY: 0, x: 0, duration: 1, ease: 'power2.inOut' }, 0)
+              .fromTo('.ej-feature-image img', { scale: 1.22 }, { scale: 1, duration: 1.2, ease: 'none' }, 0)
+          }
           scope.querySelectorAll<HTMLElement>('[data-journal-reveal]').forEach((frame, index) => {
             const wide = Boolean(conditions.desktop)
             gsap.fromTo(frame, { clipPath: `inset(${wide ? 15 : 7}% ${wide ? 18 : 6}% 8% 2% round 38%)`, rotation: wide ? (index % 2 ? 7 : -7) : 0 }, { clipPath: 'inset(0% 0% 0% 0% round 2%)', rotation: 0, ease: 'power2.inOut', scrollTrigger: { id: `editorial-window-${index}`, trigger: frame, start: 'top 96%', end: 'center 45%', scrub: .65 } })

@@ -1,0 +1,9 @@
+.collection-page .collection-intro__composition{isolation:isolate;perspective:1200px}
+.collection-page .collection-intro__composition::before{content:'';position:absolute;inset:-7% -10% -8% 12%;border:1px solid #b6926559;border-radius:50%;transform:rotate(-27deg);pointer-events:none;z-index:-1}
+.collection-page .collection-intro__composition::after{content:'';position:absolute;width:36%;aspect-ratio:1;right:-7%;bottom:-8%;background:url('/images/elements/pearl-cluster.webp') center/contain no-repeat;pointer-events:none;z-index:3}
+.collection-page .collection-intro__composition img{backface-visibility:hidden;transform-origin:50% 75%}
+.collection-page .collection-grid{perspective:1400px}
+.collection-page .collection-photo>button{transform-origin:50% 100%;backface-visibility:hidden}
+.collection-page .collection-photo>button:focus-visible{clip-path:none!important;outline:3px solid var(--teal);outline-offset:5px}
+@media(max-width:760px){.collection-page .collection-intro__composition::before{inset:0 0 -5%}.collection-page .collection-intro__composition::after{right:-2%;bottom:-6%;width:29%}}
+@media(prefers-reduced-motion:reduce){.collection-page .collection-intro__composition img,.collection-page .collection-photo>button{transform:none!important;clip-path:none!important}}

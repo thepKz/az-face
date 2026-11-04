@@ -62,3 +62,11 @@
 .experience-ritual>.collage-art{mask-image:linear-gradient(transparent 12%,#000 35%,#000 78%,transparent 95%)}
 @media(max-width:760px){.experience-opening>.collage-art{mask-image:linear-gradient(transparent 30%,#000 52%)}.experience-chapter>.collage-art{mask-image:linear-gradient(transparent 25%,#000 55%)}.experience-close>.collage-art{mask-image:linear-gradient(#000 15%,transparent 48%)}}
 @media(max-width:760px){.experience-page .experience-opening.collage-host{min-height:920px;align-items:flex-start}.experience-page .experience-opening.collage-host>figure{inset:40% 12% 6%;width:76%;border-radius:40% 40% 4% 4%}.experience-page .experience-opening__copy{padding-block:45px;pointer-events:auto}.experience-page .experience-opening__copy h1{font-size:58px;max-width:12ch}.experience-page .experience-opening__copy p{max-width:34ch}.experience-page .experience-chapter.collage-host,.experience-page .experience-close.collage-host{padding-block:70px;gap:40px}.experience-page .experience-ritual>figure{width:88%;border-width:7px}.experience-page .experience-ritual.collage-host{padding-block:65px}.experience-page .experience-opening__index{display:none}}
+
+/* Frame depth belongs to photographs, leaving the reading column stationary. */
+.experience-page .experience-opening.collage-host>figure{transform-origin:50% 70%;backface-visibility:hidden}
+.experience-page .experience-chapter__image{transform-origin:50% 15%;backface-visibility:hidden}
+.experience-page .experience-ritual>figure{transform-origin:50% 50%;backface-visibility:hidden;outline:1px solid #c5b39680;outline-offset:12px}
+.experience-page .experience-close>figure{box-shadow:18px 22px 0 #dce7e2,-12px -14px 0 #f3e5cc;transform-origin:50% 65%}
+@media(max-width:760px){.experience-page .experience-ritual>figure{outline-offset:6px}.experience-page .experience-close>figure{box-shadow:10px 12px 0 #dce7e2,-6px -8px 0 #f3e5cc}}
+@media(prefers-reduced-motion:reduce){.experience-page .experience-chapter__image,.experience-page .experience-ritual>figure,.experience-page .experience-close>figure{clip-path:none!important;transform:none!important}}

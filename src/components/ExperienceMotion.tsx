@@ -48,18 +48,33 @@ export function ExperienceMotion() {
       const media = gsap.matchMedia()
       media.add('(prefers-reduced-motion: no-preference) and (min-width: 761px)', () => {
         const context = gsap.context(() => {
-          gsap.fromTo(opening.querySelector('figure'),
-            { clipPath: 'ellipse(43% 48% at 50% 50%)', rotation: 8, scale: .88 },
-            { clipPath: 'ellipse(75% 72% at 50% 50%)', rotation: -6, scale: 1.05, ease: 'none', scrollTrigger: { id: 'visit-room-morph', trigger: opening, start: 'top 60%', end: 'bottom 35%', scrub: .55 } })
-          gsap.fromTo(opening.querySelector(':scope > figure img'), { scale: 1.12 },
-            { scale: 1, ease: 'none', scrollTrigger: { trigger: opening, start: 'top top', end: 'bottom top', scrub: .55 } })
+          const room = gsap.timeline({ scrollTrigger: { id: 'visit-room-morph', trigger: opening, start: 'top 65%', end: 'bottom 25%', scrub: .65 } })
+          room.fromTo(opening.querySelector(':scope > figure'),
+            { clipPath: 'ellipse(17% 46% at 50% 50%)', rotation: 13, scale: .78 },
+            { clipPath: 'ellipse(72% 74% at 50% 50%)', rotation: -3, scale: 1, ease: 'power2.inOut', duration: 1 })
+            .fromTo(opening.querySelector(':scope > figure img'), { scale: 1.55, xPercent: -12 },
+              { scale: 1, xPercent: 0, duration: 1.3, ease: 'power2.out' }, 0)
           const portrait = root.querySelector('.experience-chapter__image')
-          gsap.fromTo(portrait, { borderRadius: '48% 48% 12% 12%' },
-            { borderRadius: '32% 54% 42% 18%', ease: 'none', scrollTrigger: { trigger: portrait, start: 'top 90%', end: 'bottom 45%', scrub: .6 } })
+          gsap.fromTo(portrait, { clipPath: 'inset(0% 0% 85% 0% round 45% 45% 8% 8%)', rotation: 9, y: 70 },
+            { clipPath: 'inset(0% 0% 0% 0% round 32% 54% 42% 18%)', rotation: 0, y: 0, ease: 'power2.inOut', scrollTrigger: { id: 'visit-listening-reveal', trigger: '#lang-nghe', start: 'top 85%', end: 'center 45%', scrub: .7 } })
           const ritual = root.querySelector('.experience-ritual > figure')
-          gsap.fromTo(ritual, { scaleX: .62, rotation: -9, clipPath: 'inset(8% 4% 8% 4% round 35%)' }, { scaleX: 1, rotation: 2, clipPath: 'inset(0% 0% 0% 0% round 3%)', ease: 'power2.inOut', scrollTrigger: { id: 'visit-ritual-unfold', trigger: ritual, start: 'top 95%', end: 'center 40%', scrub: .65 } })
+          const unfolding = gsap.timeline({ scrollTrigger: { id: 'visit-ritual-unfold', trigger: '#cham-chut', start: 'top 85%', end: 'bottom 65%', scrub: .8 } })
+          unfolding.fromTo(ritual, { rotationY: -48, rotationZ: -7, scale: .72, clipPath: 'inset(0% 44% 0% 44% round 45%)', transformPerspective: 1200 },
+            { rotationY: 0, rotationZ: 0, scale: 1, clipPath: 'inset(0% 0% 0% 0% round 3%)', ease: 'power2.inOut', duration: 1.4 })
+            .fromTo(root.querySelector('.experience-ritual > figure img'), { scale: 1.5, xPercent: 10 }, { scale: 1, xPercent: 0, duration: 1.4, ease: 'power2.out' }, 0)
           const close = root.querySelector('.experience-close > figure')
-          gsap.fromTo(close, { clipPath: 'ellipse(32% 45% at 50% 50%)', rotation: 18, yPercent: 14 }, { clipPath: 'ellipse(72% 72% at 50% 50%)', rotation: -5, yPercent: 0, ease: 'power2.out', scrollTrigger: { id: 'visit-close-portrait', trigger: close, start: 'top 95%', end: 'center 45%', scrub: .6 } })
+          gsap.fromTo(close, { clipPath: 'circle(12% at 50% 65%)', rotation: -24, scale: .75 }, { clipPath: 'circle(74% at 50% 50%)', rotation: 0, scale: 1, ease: 'power2.inOut', scrollTrigger: { id: 'visit-close-portrait', trigger: '#tiep-noi', start: 'top 90%', end: 'center 45%', scrub: .75 } })
+        }, root)
+        return () => context.revert()
+      })
+      media.add('(prefers-reduced-motion: no-preference) and (max-width: 760px)', () => {
+        const context = gsap.context(() => {
+          root.querySelectorAll('.experience-chapter__image, .experience-ritual > figure, .experience-close > figure').forEach((figure, index) => {
+            gsap.fromTo(figure, { clipPath: 'inset(0% 0% 38% 0% round 30%)', y: 35, rotation: index % 2 ? -5 : 5 }, {
+              clipPath: 'inset(0% 0% 0% 0% round 3%)', y: 0, rotation: 0, ease: 'power2.out',
+              scrollTrigger: { id: `visit-mobile-${index}`, trigger: figure.parentElement, start: 'top 92%', end: 'center 65%', scrub: .45 },
+            })
+          })
         }, root)
         return () => context.revert()
       })

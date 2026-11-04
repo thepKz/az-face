@@ -6,6 +6,7 @@ import { ArrowIcon } from './Icons'
 import { CollageArt } from './CollageArt'
 import { JournalMotion } from './JournalMotion'
 import './editorial-journal.css'
+import './editorial-stage.css'
 
 export function EditorialJournal({ posts, page, pageCount }: { posts: PublicPost[]; page: number; pageCount: number }) {
   const locale = useLocale()

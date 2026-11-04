@@ -7,6 +7,7 @@ import type { PublicPost } from '@/lib/cms'
 import { ArrowIcon } from './Icons'
 import { CollageArt } from './CollageArt'
 import './immersive-editorial.css'
+import './editorial-stage.css'
 
 const photographs = [
   { image: 'edition-collection-skin', vi: 'Làn da', en: 'Skin' },
@@ -51,10 +52,11 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
             scene.fromTo(frame.querySelector('img'), { scale: 1.2, yPercent: index % 2 ? -5 : 5 }, { scale: 1, yPercent: 0, ease: 'none', duration: 1.2 }, index * .07)
           })
           root.current!.querySelectorAll<HTMLElement>('.im-editorial-stories article').forEach((article, index) => {
-            gsap.fromTo(article, { rotationY: desktop ? -28 : 0, rotation: desktop ? (index % 2 ? 7 : -7) : 0, y: desktop ? 90 : 28, transformOrigin: '0% 50%' }, {
-              rotationY: 0, rotation: 0, y: 0, ease: 'power2.out',
-              scrollTrigger: { id: `az-journal-sheet-${index + 1}`, trigger: article, start: 'top 88%', end: 'center 56%', scrub: .55 },
-            })
+            const sheet = gsap.timeline({ scrollTrigger: { id: `az-journal-sheet-${index + 1}`, trigger: article, start: 'top 95%', end: 'top 20%', scrub: .65 } })
+            sheet.fromTo(article.querySelector('.im-editorial-thumb'), { clipPath: 'inset(0% 48% 0% 48% round 45%)', rotationY: desktop ? -42 : 0 }, { clipPath: 'inset(0% 0% 0% 0% round 0%)', rotationY: 0, duration: 1, ease: 'power2.inOut' }, 0)
+              .fromTo(article.querySelector('img'), { scale: 1.35, xPercent: index % 2 ? 12 : -12 }, { scale: 1, xPercent: 0, duration: 1, ease: 'power2.out' }, 0)
+              .fromTo(article.querySelector('.im-editorial-story-copy'), { x: desktop ? 60 : 0, y: desktop ? 0 : 20 }, { x: 0, y: 0, duration: .8, ease: 'power2.out' }, .15)
+            if (desktop && index < 2) gsap.to(article, { scale: .94, rotation: index % 2 ? 2 : -2, transformOrigin: '50% 0%', ease: 'none', scrollTrigger: { id: `az-journal-stack-${index}`, trigger: article.nextElementSibling, start: 'top 85%', end: 'top 24%', scrub: .6 } })
           })
         }, root)
         return () => context.revert()
@@ -73,7 +75,7 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
       <div className="im-editorial-gallery-bottom"><span>{english ? 'AZ FACE — Illustrative imagery' : 'AZ FACE — Hình ảnh minh họa'}</span><Link href="/bo-suu-tap" className="im-editorial-link">{english ? 'Explore the collection' : 'Khám phá bộ sưu tập'}<ArrowIcon /></Link></div>
     </section>
     <section className="im-editorial-journal collage-host" aria-labelledby="im-journal-title">
-      <CollageArt variant="atelier" />
+      <div className="im-editorial-material" aria-hidden="true"><img src="/images/elements/teal-silk.webp" alt="" width="1000" height="1000" loading="lazy" /><img src="/images/elements/champagne-petal.webp" alt="" width="1000" height="1000" loading="lazy" /></div>
       <header><h2 id="im-journal-title">{english ? 'Understand your options.' : 'Hiểu trước khi chọn.'}</h2><Link className="im-editorial-link" href="/kien-thuc">{english ? 'All articles' : 'Tất cả bài viết'}<ArrowIcon /></Link></header>
       {posts.length ? <div className="im-editorial-stories">{posts.slice(0, 3).map(post => <article key={post.slug}><Link href={`/kien-thuc/${post.slug}`} className="im-editorial-story"><div className="im-editorial-thumb"><img src={post.image} alt="" width="360" height="240" loading="lazy" /></div><div className="im-editorial-story-copy"><div className="im-editorial-meta"><span>{post.category}</span><span>{post.readTime}</span></div><h3>{post.title}</h3><p>{post.excerpt}</p></div><span className="im-editorial-read"><span>{english ? 'Read article' : 'Đọc bài viết'}</span><ArrowIcon /></span></Link></article>)}</div> : <p>{english ? 'New articles are being prepared. Explore our services while you wait.' : 'Bài viết mới đang được chuẩn bị. Bạn có thể tìm hiểu dịch vụ trong lúc này.'}</p>}
     </section>

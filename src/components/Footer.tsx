@@ -1,7 +1,6 @@
 import Link from '@/i18n/Link'
 import { getTranslations } from 'next-intl/server'
 import { ArrowIcon } from './Icons'
-import { CollageArt } from './CollageArt'
 import { FooterMotion } from './FooterMotion'
 import './footer.css'
 
@@ -9,9 +8,16 @@ export async function Footer() {
   const [t, f] = await Promise.all([getTranslations('common'), getTranslations('footer')])
   return <footer className="az-footer-climax" id="az-footer-climax">
     <FooterMotion />
-    <div className="az-footer-invitation collage-host"><CollageArt variant="bloom" />
+    <div className="az-footer-invitation az-footer-finale">
       <Link className="az-footer-logo" href="/" aria-label={t('homeLabel')}><img src="/brand/logo.svg" alt="" width="80" height="80" /></Link>
       <div><h2><Link href="/lien-he">{f('invitation')}<span className="az-footer-cta-icon"><ArrowIcon /></span></Link></h2><p className="az-footer-promise">{f('promise')}</p></div>
+      <div className="az-footer-art" aria-hidden="true">
+        <span className="az-footer-orbit az-footer-orbit--outer" /><span className="az-footer-orbit az-footer-orbit--inner" />
+        <img className="az-footer-arc" src="/images/elements/champagne-arc.webp" alt="" width="1000" height="1000" loading="lazy" />
+        <svg className="az-footer-portrait" viewBox="0 0 600 700"><defs><clipPath id="footer-portrait-window"><path d="M80 40 C210 5 440 5 520 100 C585 180 585 500 520 610 C450 700 180 700 80 610 C5 530 5 180 80 40 Z" /></clipPath></defs><image href="/images/brand-choice-kbeauty.webp" width="600" height="700" preserveAspectRatio="xMidYMid slice" clipPath="url(#footer-portrait-window)" /></svg>
+        <img className="az-footer-orchid" src="/images/elements/pearl-orchid.webp" alt="" width="1000" height="1000" loading="lazy" />
+        <img className="az-footer-pearls" src="/images/elements/pearl-cluster.webp" alt="" width="1000" height="1000" loading="lazy" />
+      </div>
     </div>
     <div className="az-footer-stage">
       <div className="az-footer-utilities">

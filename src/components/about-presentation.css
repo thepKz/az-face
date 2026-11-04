@@ -34,3 +34,46 @@
 @media(max-width:900px){.az-about p{font-size:17px}.az-about__philosophy-art{position:relative;top:auto;max-height:none}.az-about__philosophy-art img{transition:none}.az-about__philosophy-art img:first-child{opacity:1}.az-about__philosophy-art img:not(:first-child),.az-about__art-caption{display:none}.az-about__principles>div{min-height:0;padding-bottom:22px}.az-about__mosaic{padding-block:65px 90px}}
 @media(max-width:680px){.az-about h2{font-size:clamp(34px,9vw,48px)}.az-about p{font-size:16px}.az-about__hero{grid-template-columns:1fr;gap:30px;min-height:0;padding:34px var(--gutter) 64px}.az-about__hero h1{font-size:clamp(46px,12.5vw,70px);max-width:12ch}.az-about__hero-copy p{margin-top:20px;max-width:40ch}.az-about__explore{margin-top:16px}.az-about__hero-composition{width:90%;justify-self:center;padding-right:5%;padding-bottom:12%}.az-about__hero-room{width:49%;right:-3%;border-width:5px}.az-about__opening{grid-template-columns:1fr;gap:22px;padding-block:42px 45px}.az-about__opening h2{max-width:18ch}.az-about__mosaic{gap:18px;padding-block:48px 74px}.az-about__mosaic-tall{grid-column:1/11;grid-row:1;aspect-ratio:4/4.6}.az-about__mosaic-copy{grid-column:1/13;grid-row:3;padding-top:10px}.az-about__mosaic-copy h2{font-size:40px;max-width:16ch}.az-about__mosaic-detail{grid-column:5/13;grid-row:2;margin-top:-75px!important;border-width:5px}.az-about__philosophy{grid-template-columns:1fr;gap:42px;padding-block:54px 58px}.az-about__philosophy-art{width:88%;justify-self:center;aspect-ratio:1.04}.az-about__principles h2{max-width:18ch;margin-bottom:28px}.az-about__principles h3{font-size:25px}}
 @media(prefers-reduced-motion:reduce){.az-about__philosophy-art{position:relative;top:auto}.az-about__philosophy-art img{transition:none}.az-about__philosophy-art img:first-child{opacity:1}.az-about__philosophy-art img:not(:first-child),.az-about__art-caption{display:none}.az-about__principles>div{min-height:0}.az-about__reading-line{transform:none!important}}
+
+/* Each chapter has its own spatial rhythm: proscenium, statement, montage, then reading room. */
+.az-about__hero{grid-template-columns:1fr;gap:26px;padding-top:54px;padding-bottom:100px;background:radial-gradient(ellipse at 50% 65%,#b4e3e5 0%,#edf7f5 65%)}
+.az-about__hero-copy{max-width:1100px;justify-self:center;text-align:center}
+.az-about__hero h1{max-width:15ch;margin:auto;font-size:clamp(60px,8.2vw,128px);line-height:1.04}
+.az-about__hero-copy p{max-width:54ch;margin:24px auto 0}
+.az-about__hero-composition{width:min(66%,800px);justify-self:center;padding:0 8% 8%;margin-top:-12px}
+.az-about__hero-portrait{max-height:640px;transform-origin:50% 50%}
+.az-about__hero-room{right:-14%;bottom:3%;width:48%;border-radius:0 40% 0 0;transform:rotate(0)}
+.az-about__hero>.collage-art{mask-image:linear-gradient(180deg,transparent 18%,#000 55%)}
+.az-about__opening{grid-template-columns:1fr;gap:32px;text-align:center;padding-block:100px 110px;background:#073d46;color:#edf7f5}
+.az-about__opening h2{max-width:19ch;margin:auto;font-size:clamp(46px,7vw,108px);color:#72979b;background:linear-gradient(#edf7f5,#edf7f5) no-repeat,linear-gradient(#72979b,#72979b) no-repeat;background-clip:text;-webkit-background-clip:text;background-size:100% 100%;-webkit-text-fill-color:transparent}
+.az-about__opening>div{max-width:610px;margin:auto}.az-about__opening p{max-width:48ch;color:#c6dfe0}.az-about__opening .text-link{color:#ead7b3}
+.az-about__mosaic{padding-block:95px 110px;gap:35px;background:#e9dfcb}
+.az-about__mosaic-copy{grid-column:1/13;grid-row:1;display:grid;grid-template-columns:1.2fr .8fr;gap:8%;align-items:end;padding:0 0 30px}
+.az-about__mosaic-copy h2{max-width:17ch;font-size:clamp(48px,6vw,88px)}.az-about__mosaic-copy p{margin:0;max-width:34ch}
+.az-about__mosaic-tall{grid-column:1/9;grid-row:2;aspect-ratio:1.45;border-radius:5% 32% 5% 22%;transform:none}
+.az-about__mosaic-detail{grid-column:8/13;grid-row:2;margin-top:32%!important;aspect-ratio:.85;border:0;border-radius:45% 45% 0 0;transform:none;box-shadow:none!important}
+.az-about__mosaic>.collage-art{mask-image:linear-gradient(180deg,transparent 30%,#000 75%)}
+.az-about__philosophy{gap:8%;padding-block:130px;background:radial-gradient(ellipse at 20% 30%,#176b75,#073d46 65%)}
+.az-about__principles{counter-reset:principle}.az-about__principles>div{counter-increment:principle;min-height:42svh;padding-top:40px}
+.az-about__principles>div:before{content:'0' counter(principle);display:block;font:400 clamp(58px,7vw,110px)/1 var(--serif);color:#b99a64;margin-bottom:20px}
+.az-about__principles h3{font-size:clamp(27px,3vw,43px)}
+@keyframes about-portrait-shutter{from{clip-path:inset(0 48% 0 48%);transform:scale(1.2)}to{clip-path:inset(0);transform:scale(1)}}
+@media(min-width:901px) and (prefers-reduced-motion:no-preference){.az-about__philosophy-art img.is-current{animation:about-portrait-shutter .9s cubic-bezier(.76,0,.24,1) both}}
+@media(max-width:900px){.az-about__hero-composition{width:80%}.az-about__hero h1{font-size:clamp(54px,9vw,84px)}.az-about__principles>div{min-height:0;padding-bottom:25px}.az-about__mosaic-copy{grid-template-columns:1fr;gap:22px}.az-about__philosophy{padding-block:70px}}
+@media(max-width:680px){.az-about__hero{padding-block:36px 60px;gap:28px}.az-about__hero h1{font-size:clamp(46px,12vw,68px)}.az-about__hero-composition{width:88%;padding:0 4% 12%;margin-top:0}.az-about__hero-room{right:-7%;width:49%}.az-about__opening{padding-block:65px}.az-about__opening h2{font-size:43px}.az-about__mosaic{padding-block:54px 64px;gap:22px}.az-about__mosaic-copy{grid-row:1;padding:0;gap:20px}.az-about__mosaic-copy h2{font-size:42px}.az-about__mosaic-tall{grid-column:1/13;grid-row:2;aspect-ratio:1.1}.az-about__mosaic-detail{grid-column:6/13;grid-row:3;margin-top:-55px!important;aspect-ratio:1}.az-about__principles>div:before{font-size:66px}.az-about__philosophy{padding-block:58px}}
+
+/* Keep the entire portrait stage in the first desktop viewport. */
+@media(min-width:1000px){
+.az-about__hero{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);column-gap:3%;row-gap:16px;min-height:680px;height:calc(100svh - 105px);max-height:840px;padding:30px var(--gutter) 45px;align-items:center}
+.az-about__hero-copy{display:contents}
+.az-about__hero h1{grid-column:1/4;grid-row:1;font-size:clamp(68px,5.7vw,84px);line-height:1.08;max-width:22ch;text-align:center;margin:0 auto}
+.az-about__hero-copy p{grid-column:1;grid-row:2;max-width:25ch;text-align:left;margin:0;font-size:18px;position:relative;z-index:3}
+.az-about__hero-copy .az-about__explore{grid-column:3;grid-row:2;justify-self:end;align-self:center;max-width:22ch;margin:0;gap:18px;text-align:left;position:relative;z-index:3}
+.az-about__hero-copy .az-about__explore span{flex:none}
+.az-about__hero-composition{grid-column:2;grid-row:2;width:100%;height:100%;min-height:0;margin:0;padding:0 7% 8%;display:flex;align-items:center;justify-content:center}
+.az-about__hero-portrait{width:100%;height:100%;max-height:570px;aspect-ratio:700/800;object-fit:contain}
+.az-about__hero-room{width:40%;right:-6%;bottom:1%;border-width:5px}
+.az-about__hero>.collage-art{mask-image:linear-gradient(90deg,#000,transparent 22%,transparent 78%,#000)}
+}
+
+.az-about__opening{background:linear-gradient(#073d46e8,#073d46e8),url('/images/elements/teal-liquid.webp') center/cover}.az-about__mosaic{background:#e9dfcb url('/images/elements/pearl-paper.webp') center/cover;background-blend-mode:multiply}

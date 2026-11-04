@@ -37,9 +37,11 @@ export function AboutPresentation() {
           hero.to('.az-about__window-path', { morphSVG: wideWindow, ease: 'power1.inOut', duration: 1 }, 0)
             .to('.az-about__hero-portrait', { rotation: desktop ? -9 : -4, scale: desktop ? 1.1 : 1.04, yPercent: -8, ease: 'none', duration: 1 }, 0)
             .to('.az-about__hero-room', { xPercent: desktop ? 24 : 8, yPercent: -28, rotation: 12, ease: 'none', duration: 1 }, 0)
+          gsap.fromTo('.az-about__hero-portrait', { clipPath: 'inset(0 42% 0 42% round 45%)' }, { clipPath: 'inset(0 0% 0 0% round 0%)', duration: 1.4, ease: 'expo.inOut', clearProps: 'clipPath' })
+          gsap.fromTo('.az-about__opening h2', { backgroundSize: '0% 100%,100% 100%' }, { backgroundSize: '100% 100%,100% 100%', ease: 'none', scrollTrigger: { id: 'az-about-type-development', trigger: '.az-about__opening', start: 'top 85%', end: 'center 45%', scrub: .5 } })
           const mosaic = gsap.timeline({ scrollTrigger: { id: 'az-about-collage-mosaic', trigger: '.az-about__mosaic', start: 'top 92%', end: 'center 38%', scrub: .65 } })
-          mosaic.fromTo('.az-about__mosaic-tall', { rotation: -12, scale: .8, clipPath: 'inset(12% 18% 8% 4% round 35% 35% 6% 6%)' }, { rotation: -3, scale: 1, clipPath: 'inset(0% 0% 0% 0% round 36% 6% 6% 6%)', duration: 1, ease: 'power2.out' }, 0)
-            .fromTo('.az-about__mosaic-detail', { rotation: 20, xPercent: desktop ? -48 : -22, yPercent: 28, scale: .72 }, { rotation: 8, xPercent: 0, yPercent: 0, scale: 1, duration: 1, ease: 'power2.out' }, .12)
+          mosaic.fromTo('.az-about__mosaic-tall', { rotation: 0, scale: .78, clipPath: 'circle(18% at 50% 50%)' }, { rotation: 0, scale: 1, clipPath: 'circle(74% at 50% 50%)', duration: 1, ease: 'power2.inOut' }, 0)
+            .fromTo('.az-about__mosaic-detail', { rotation: 0, xPercent: desktop ? -65 : -22, yPercent: 45, scale: .65, clipPath: 'inset(48% 0 48% 0)' }, { rotation: 0, xPercent: 0, yPercent: 0, scale: 1, clipPath: 'inset(0% 0 0% 0)', duration: 1, ease: 'power2.inOut' }, .12)
           const philosophy = section.querySelector('.az-about__philosophy')!
           if (desktop) {
             gsap.timeline({ scrollTrigger: { id: 'az-about-principle-window', trigger: philosophy, start: 'top 70%', end: 'bottom 65%', scrub: .8 } })
@@ -47,7 +49,10 @@ export function AboutPresentation() {
               .to('.az-about__philosophy-art', { borderRadius: '42% 4% 42% 4%', rotation: -3, duration: 1 })
           }
           section.querySelectorAll<HTMLElement>('[data-about-principle]').forEach((chapter, index) => {
-            ScrollTrigger.create({ id: `az-about-principle-${index + 1}`, trigger: chapter, start: 'top 65%', end: 'bottom 65%', onEnter: () => setActivePrinciple(index), onEnterBack: () => setActivePrinciple(index) })
+            const select = () => {
+              setActivePrinciple(index)
+            }
+            ScrollTrigger.create({ id: `az-about-principle-${index + 1}`, trigger: chapter, start: 'top 65%', end: 'bottom 65%', onEnter: select, onEnterBack: select })
             gsap.fromTo(chapter.querySelector('.az-about__reading-line'), { scaleX: .12 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: chapter, start: 'top 86%', end: 'top 45%', scrub: true } })
           })
         }, section)

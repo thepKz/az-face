@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ArrowIcon } from './Icons'
 import { CollageArt } from './CollageArt'
 import './collection-gallery-motion.css'
+import './collection-cinematic.css'
 
 const photographs = [
   { src: 'edition-collection-skin', title: 'Làn da dưới nắng', category: 'Làn da', alt: 'Chân dung với làn da tự nhiên trong ánh sáng mềm' },
@@ -45,8 +46,21 @@ export function CollectionGallery() {
       const media = gsap.matchMedia()
       media.add('(prefers-reduced-motion: no-preference)', () => {
         const context = gsap.context(() => {
-          document.querySelectorAll('.collection-intro__composition img').forEach((image, index) => {
-            gsap.fromTo(image, { rotation: index ? 20 : -18, yPercent: index ? 20 : -10, scale: .85 }, { rotation: index ? -4 : 5, yPercent: index ? -15 : 15, scale: 1, ease: 'none', scrollTrigger: { id: `collection-opening-${index}`, trigger: '.collection-intro', start: 'top 80%', end: 'bottom top', scrub: .7 } })
+          const intro = document.querySelector('.collection-intro')
+          if (!intro) return
+          const images = intro.querySelectorAll('.collection-intro__composition img')
+          const mobile = window.matchMedia('(max-width: 760px)').matches
+          const sequence = gsap.timeline({ scrollTrigger: { id: 'collection-aperture-sweep', trigger: intro, start: 'top 75%', end: 'bottom 20%', scrub: .8 } })
+          images.forEach((image, index) => {
+            sequence.fromTo(image, {
+              clipPath: index ? 'inset(90% 0% 0% 0% round 45% 45% 4% 4%)' : 'ellipse(10% 46% at 50% 50%)',
+              rotation: index ? 22 : -20, xPercent: index ? -18 : 18, scale: .8,
+            }, {
+              clipPath: index ? 'inset(0% 0% 0% 0% round 45% 45% 4% 4%)' : 'ellipse(70% 72% at 50% 50%)',
+              rotation: index ? 5 : -5, xPercent: 0, scale: 1,
+              duration: 1, ease: 'power2.inOut',
+            }, index * .22)
+            sequence.to(image, { yPercent: index ? (mobile ? -7 : -18) : (mobile ? 5 : 12), duration: .65, ease: 'none' }, .8)
           })
         })
         return () => context.revert()
@@ -58,8 +72,9 @@ export function CollectionGallery() {
   useEffect(() => {
     let cancelled = false
     let cleanup = () => {}
-    import('gsap').then(({ gsap }) => {
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
       if (cancelled || !grid.current) return
+      gsap.registerPlugin(ScrollTrigger)
       motionEngine.current = gsap
       const media = gsap.matchMedia()
       media.add('(prefers-reduced-motion: no-preference)', () => {
@@ -77,6 +92,19 @@ export function CollectionGallery() {
             } else {
               gsap.fromTo(photo, { opacity: .35 }, { opacity: 1, duration: .32, delay: Math.min(index * .035, .14), clearProps: 'opacity' })
               gsap.fromTo(photo.querySelector('img'), { scale: 1.045 }, { scale: 1, duration: .5, ease: 'power3.out', clearProps: 'transform' })
+            }
+            // The button owns the scroll fan; figure transforms remain reserved for filter FLIP.
+            if (positions.size === 0) {
+              const button = photo.querySelector('button')
+              const mobile = window.matchMedia('(max-width: 760px)').matches
+              gsap.fromTo(button, {
+                rotation: (index % 2 ? 1 : -1) * (mobile ? 7 : 16),
+                y: mobile ? 44 : 110, scale: .8,
+                clipPath: 'inset(0% 0% 65% 0% round 42% 42% 4% 4%)',
+              }, {
+                rotation: 0, y: 0, scale: 1, clipPath: 'inset(0% 0% 0% 0% round 0%)', ease: 'power2.out',
+                scrollTrigger: { id: `collection-fan-${index}`, trigger: photo, start: 'top 98%', end: 'top 55%', scrub: .6 },
+              })
             }
           })
         }, grid)
