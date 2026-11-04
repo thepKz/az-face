@@ -7,7 +7,6 @@ import { ImmersiveHero } from '@/components/ImmersiveHero'
 import { ImmersiveServices } from '@/components/ImmersiveServices'
 import { ImmersiveJourney } from '@/components/ImmersiveJourney'
 import { ImmersiveEditorial } from '@/components/ImmersiveEditorial'
-import { CinemaBridge } from '@/components/CinemaBridge'
 import { ArrowIcon } from '@/components/Icons'
 import { FAQ } from '@/components/FAQ'
 import './home-story.css'
@@ -19,7 +18,6 @@ export default async function HomePage() {
   const [posts, services] = await Promise.all([getPublishedPosts(), getServices()])
   return <div className="cinema-home">
     <ImmersiveHero />
-    <CinemaBridge text={en ? 'Skin. Features. Expression.' : 'Làn da. Đường nét. Biểu cảm.'} />
     <ImmersiveServices services={services} />
     <ImmersiveJourney />
     <ImmersiveEditorial posts={posts.slice(0, 3)} />

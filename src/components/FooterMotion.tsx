@@ -15,10 +15,10 @@ export function FooterMotion() {
       const media = gsap.matchMedia()
       media.add('(prefers-reduced-motion: no-preference)', () => {
         const context = gsap.context(() => {
-          gsap.fromTo('.az-footer-letter', { yPercent: 75, rotation: 8 }, {
-            yPercent: 0, rotation: 0, duration: 1, stagger: .1,
+          gsap.fromTo('.az-footer-letter', { yPercent: 12, opacity: .55 }, {
+            yPercent: 0, opacity: 1, duration: .75, stagger: .055,
             ease: 'power2.out',
-            scrollTrigger: { trigger: root.querySelector('.az-footer-display'), start: 'top 100%', end: 'clamp(bottom bottom)', scrub: .7 },
+            scrollTrigger: { trigger: root.querySelector('.az-footer-display'), start: 'top 98%', once: true },
           })
         }, root)
         return () => context.revert()

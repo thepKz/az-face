@@ -1,4 +1,7 @@
 .cinema-home{--cinema-dark:#102f2a;--cinema-light:#e8efad;color:var(--cinema-dark);background:#f4f1e9}
+body:has(.cinema-home) .az-header{position:relative}
+body:has(.cinema-home) .route-arrival{display:none}
+html:has(.cinema-home){scroll-padding-top:24px}
 .cinema-home ::selection{background:#e8efad;color:#102f2a}
 .cinema-bridge{position:relative;overflow:clip;padding:10px 0 105px;isolation:isolate;margin-bottom:-1px}
 .cinema-bridge__type{display:flex;align-items:center;gap:.45em;width:max-content;font:600 clamp(52px,7vw,112px)/1.18 var(--sans);letter-spacing:-.035em;white-space:nowrap;padding-block:25px}

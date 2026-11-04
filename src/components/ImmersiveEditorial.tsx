@@ -28,7 +28,7 @@ export function ImmersiveEditorial({ posts }: { posts: PublicPost[] }) {
         media.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
           const frames = root.current!.querySelectorAll<HTMLElement>('.im-editorial-photo')
           const offsets = [{ x: -30, y: 36, r: -13 }, { x: -12, y: -28, r: 9 }, { x: 18, y: 30, r: -8 }, { x: 32, y: -22, r: 12 }]
-          const scene = gsap.timeline({ scrollTrigger: { trigger: root.current!.querySelector('.im-editorial-gallery'), start: 'top 85%', end: 'bottom 85%', scrub: .8 } })
+          const scene = gsap.timeline({ scrollTrigger: { trigger: root.current!.querySelector('.im-editorial-sheet'), start: 'top 88%', once: true } })
           frames.forEach((frame, index) => {
             const offset = offsets[index]
             scene.fromTo(frame, { xPercent: offset.x, yPercent: offset.y, rotation: offset.r, rotateY: index % 2 ? -12 : 12, scale: .82, clipPath: 'inset(7% 4% 7% 4%)' }, { xPercent: 0, yPercent: 0, rotation: 0, rotateY: 0, scale: 1, clipPath: 'inset(0% 0% 0% 0%)', ease: 'power3.out', duration: 1 }, index * .06)

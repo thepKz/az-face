@@ -64,11 +64,6 @@ export function ImmersiveJourney() {
   useEffect(() => {
     const section = root.current
     if (!section) return
-    const header = document.querySelector<HTMLElement>('.az-header')
-    const measureHeader = () => section.style.setProperty('--journey-top', `${header?.getBoundingClientRect().height ?? 112}px`)
-    const observer = new ResizeObserver(measureHeader)
-    if (header) observer.observe(header)
-    measureHeader()
     let cancelled = false
     let dispose = () => {}
 
@@ -76,15 +71,20 @@ export function ImmersiveJourney() {
       if (cancelled) return
       gsap.registerPlugin(ScrollTrigger)
       const media = gsap.matchMedia()
-      media.add('(min-width: 901px) and (min-height: 701px) and (prefers-reduced-motion: no-preference)', () => {
+      media.add('(prefers-reduced-motion: no-preference)', () => {
         const context = gsap.context(() => {
           section.querySelectorAll<HTMLElement>('[data-journey-chapter]').forEach((chapter, index) => {
-            // Native sticky owns the chapter; only the photograph moves inside it.
-            gsap.fromTo(chapter.querySelector('[data-journey-image]'),
-              { scale: 1.18, yPercent: index % 2 ? -4 : 4 },
-              { scale: 1, yPercent: 0, ease: 'none', scrollTrigger: { trigger: chapter, start: 'top bottom', end: 'top 20%', scrub: .65 } })
-            gsap.fromTo(chapter.querySelector('[data-journey-line]'), { scaleX: .08 },
-              { scaleX: 1, ease: 'none', scrollTrigger: { trigger: chapter, start: 'top 75%', end: 'top 20%', scrub: .4 } })
+            // Each photograph opens once like a curtain; reading never depends on scroll progress.
+            const picture = chapter.querySelector('[data-journey-window]')
+            const image = chapter.querySelector('[data-journey-image]')
+            const detail = chapter.querySelector('[data-journey-detail]')
+            const reveal = gsap.timeline({ scrollTrigger: { trigger: picture, start: 'top 88%', once: true } })
+            reveal.fromTo(picture,
+              { clipPath: index === 1 ? 'inset(0 0 100% 0)' : 'inset(0 100% 0 0)' },
+              { clipPath: 'inset(0 0% 0% 0)', duration: 1.15, ease: 'expo.out' })
+              .fromTo(image, { scale: 1.12 }, { scale: 1, duration: 1.45, ease: 'expo.out' }, 0)
+            if (detail) reveal.fromTo(detail, { y: 28, rotation: -5, opacity: 0 },
+              { y: 0, rotation: 0, opacity: 1, duration: .9, ease: 'expo.out' }, .28)
           })
         }, section)
         return () => context.revert()
@@ -93,17 +93,20 @@ export function ImmersiveJourney() {
       document.fonts.ready.then(() => { if (!cancelled) ScrollTrigger.refresh() })
     }).catch(() => { /* The chapters stay in reading order without motion. */ })
 
-    return () => { cancelled = true; observer.disconnect(); dispose() }
+    return () => { cancelled = true; dispose() }
   }, [])
 
   return <section className="journey-cinema" id="trai-nghiem" ref={root} aria-label={locale === 'en' ? 'From your goals to your decision' : 'Từ mong muốn đến lựa chọn của bạn'}>
+    <div className="journey-cinema__atmosphere" aria-hidden="true" />
     {chapters.map((chapter, index) => {
       const copy = chapter[locale]
       return <article className={`journey-cinema__chapter journey-cinema__chapter--${index + 1}`} id={`journey-${chapter.id}`} key={chapter.id} data-journey-chapter>
-        <figure className="journey-cinema__picture"><img src={chapter.image} alt={copy.alt} width="1024" height="1280" loading="lazy" data-journey-image /></figure>
+        <div className="journey-cinema__composition">
+          <figure className="journey-cinema__picture" data-journey-window><img src={chapter.image} alt={copy.alt} width="1024" height="1280" loading="lazy" data-journey-image /></figure>
+          <figure className="journey-cinema__detail" data-journey-detail aria-hidden="true"><img src={['/images/journey-experience-arrival.webp', '/images/journey-service-skin-detail.webp', '/images/journey-about-detail.webp'][index]} alt="" width="768" height="1024" loading="lazy" /></figure>
+        </div>
         <div className="journey-cinema__copy">
           <h2>{copy.verb}</h2>
-          <span className="journey-cinema__line" data-journey-line aria-hidden="true" />
           <h3>{copy.title}</h3>
           <p>{copy.body}</p>
           <ul>{copy.questions.map(question => <li key={question}>{question}</li>)}</ul>
